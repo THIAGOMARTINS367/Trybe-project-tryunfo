@@ -2,6 +2,7 @@
 import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
+import InputAndPlaceholder from './components/InputAndPlaceholder';
 
 class App extends React.Component {
   constructor() {
@@ -18,6 +19,7 @@ class App extends React.Component {
       buttonDisabled: true,
       hasTrunfo: false,
       createdLetters: [],
+      temporaryData: []
     }
 
     this.saveFormFieldDataInState = this.saveFormFieldDataInState.bind(this);
@@ -25,6 +27,7 @@ class App extends React.Component {
     this.validateFormAttributesFields = this.validateFormAttributesFields.bind(this);
     this.saveLetterInState = this.saveLetterInState.bind(this);
     this.deleteCardFromDeck = this.deleteCardFromDeck.bind(this);
+    this.filterLettersByName = this.filterLettersByName.bind(this);
   }
 
   validateFormFieldsLength() {
@@ -115,7 +118,7 @@ class App extends React.Component {
       rareInput: "normal",
       hasTrunfo: hasTrunfo,
       trunfoInput: false
-    });
+    }, () => this.setState({ temporaryData: this.state.createdLetters }));
     console.log(this.state.createdLetters)
   }
 
@@ -135,11 +138,25 @@ class App extends React.Component {
         }
       })
       console.log('hasTrunfo:', hasTrunfo)
-      this.setState({ createdLetters: dataArray });
+      this.setState({ createdLetters: dataArray }, () => this.setState({ temporaryData: this.state.createdLetters }));
       if (hasTrunfo === 'ofnurT-') {
         this.setState({ hasTrunfo: false });
       }
     });
+  }
+
+  filterLettersByName({ target }) {
+    const { value } = target;
+    const allCardsNames = '';
+    const temporaryData = []
+    this.state.createdLetters.map((element) => {
+      if (element.nameInput.includes(value)) {
+        temporaryData.push(element);
+      } else if(value.length === 0) {
+        temporaryData.push(element);
+      }
+    });
+    this.setState({ temporaryData: temporaryData });
   }
 
   render() {
@@ -172,8 +189,11 @@ class App extends React.Component {
           cardTrunfo={this.state.trunfoInput}
         />
         <hr />
+        <h3>Filtros de Busca</h3>
+        <InputAndPlaceholder inputType="text" placeholderContent="Nome da Carta" onChangeEvent={this.filterLettersByName} dataTestid="name-filter"/>
+        <hr />
         {
-          this.state.createdLetters.map((element) => (
+          this.state.temporaryData.map((element) => (
             <Card
               key={`${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}`}
               cardID={element.nameInput}
