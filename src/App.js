@@ -1,4 +1,4 @@
-import { func } from 'prop-types';
+
 import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
@@ -15,12 +15,16 @@ class App extends React.Component {
       imageInput: '',
       rareInput: 'normal',
       trunfoInput: false,
-      buttonDisabled: true
+      buttonDisabled: true,
+      hasTrunfo: false,
+      createdLetters: [],
     }
 
-    this.saveDataFormFields = this.saveDataFormFields.bind(this);
+    this.saveFormFieldDataInState = this.saveFormFieldDataInState.bind(this);
     this.validateFormFieldsLength = this.validateFormFieldsLength.bind(this);
     this.validateFormAttributesFields = this.validateFormAttributesFields.bind(this);
+    this.saveLetterInState = this.saveLetterInState.bind(this);
+    this.deleteCardFromDeck = this.deleteCardFromDeck.bind(this);
   }
 
   validateFormFieldsLength() {
@@ -30,7 +34,7 @@ class App extends React.Component {
     } else {
       this.validateFormAttributesFields(false);
     }
-    console.log(imageInput)
+    // console.log(imageInput)
     
   }
 
@@ -45,19 +49,19 @@ class App extends React.Component {
       attr3Input < 0,
       Number(attr1Input) + Number(attr2Input) + Number(attr3Input) > 210
     ];
-    console.log(validations)
-    console.log(Number(attr1Input) + Number(attr2Input) + Number(attr3Input))
-    console.log('true? :', validations.includes(true));
+    // console.log(validations)
+    // console.log(Number(attr1Input) + Number(attr2Input) + Number(attr3Input))
+    // console.log('true? :', validations.includes(true));
     if (validations.includes(true) || previousValidatorAnswer === true) {
-      console.log('entrou em true')
+      // console.log('entrou em true');
       this.setState({ buttonDisabled: true });
     } else {
       this.setState({ buttonDisabled: false });
     }
   }
 
-  saveDataFormFields({ target }) {
-    const { name, value, type, checked } = target;
+  saveFormFieldDataInState({ target }) {
+    const { name, value = '', type, checked } = target;
     let nameFormatted = '';
     for (let index = 0; index < name.length; index += 1) {
       if (name[index] === '-') {
@@ -67,11 +71,75 @@ class App extends React.Component {
         nameFormatted += name[index];
       }
     }
-    console.log(nameFormatted);
+    // console.log(nameFormatted);
     this.setState(
       { [nameFormatted]: type === "checkbox" ? checked : value },
       this.validateFormFieldsLength
     );
+  }
+
+  saveLetterInState() {
+    const {
+      nameInput,
+      descriptionInput,
+      attr1Input,
+      attr2Input,
+      attr3Input,
+      imageInput,
+      rareInput,
+      trunfoInput,
+    } = this.state;
+    const object = {
+      nameInput,
+      descriptionInput,
+      attr1Input,
+      attr2Input,
+      attr3Input,
+      imageInput,
+      rareInput,
+      trunfoInput: trunfoInput
+    }
+    let hasTrunfo = this.state.hasTrunfo;
+    if (this.state.trunfoInput === true) {
+      hasTrunfo = true
+    }
+    console.log(hasTrunfo);
+    this.state.createdLetters.push(object);
+    this.setState({
+      nameInput: "",
+      descriptionInput: "",
+      imageInput: "",
+      attr1Input: 0,
+      attr2Input: 0,
+      attr3Input: 0,
+      rareInput: "normal",
+      hasTrunfo: hasTrunfo,
+      trunfoInput: false
+    });
+    console.log(this.state.createdLetters)
+  }
+
+  deleteCardFromDeck({ target }) {
+    const { name } = target;
+    let nameFormatted = name.replace('button-','').replace('-Trunfo', '');
+    let hasTrunfo = '';
+    const previousCreatedLetters = this.state.createdLetters;
+    const dataArray = [];
+    for (let index = 0; index < 7; index++) {
+      hasTrunfo += name[name.length -1 - index];
+    }
+    this.setState({ createdLetters: [] }, () => {
+      previousCreatedLetters.map((element) => {
+        if (element.nameInput !== nameFormatted) {
+          dataArray.push(element)
+        }
+      })
+      console.log('hasTrunfo:', hasTrunfo)
+      this.setState({ createdLetters: dataArray });
+      if (hasTrunfo === 'ofnurT-') {
+        this.setState({ hasTrunfo: false });
+      }
+    });
   }
 
   render() {
@@ -87,10 +155,10 @@ class App extends React.Component {
           cardImage={this.state.imageInput}
           cardRare={this.state.rareInput}
           cardTrunfo={this.state.trunfoInput}
-          hasTrunfo=""
+          hasTrunfo={this.state.hasTrunfo}
           isSaveButtonDisabled={this.state.buttonDisabled}
-          onInputChange={this.saveDataFormFields}
-          onSaveButtonClick={() => ''}
+          onInputChange={this.saveFormFieldDataInState}
+          onSaveButtonClick={this.saveLetterInState}
         />
         <hr />
         <Card
@@ -103,6 +171,25 @@ class App extends React.Component {
           cardRare={this.state.rareInput}
           cardTrunfo={this.state.trunfoInput}
         />
+        <hr />
+        {
+          this.state.createdLetters.map((element) => (
+            <Card
+              key={`${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}`}
+              cardID={element.nameInput}
+              cardName={element.nameInput}
+              cardDescription={element.descriptionInput}
+              cardAttr1={element.attr1Input}
+              cardAttr2={element.attr2Input}
+              cardAttr3={element.attr3Input}
+              cardImage={element.imageInput}
+              cardRare={element.rareInput}
+              cardTrunfo={element.trunfoInput}
+              deleteButton={true}
+              handlerFuncDelete={this.deleteCardFromDeck}
+            />
+          ))
+        }
       </main>
     );
   }

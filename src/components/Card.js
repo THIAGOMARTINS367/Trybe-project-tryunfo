@@ -3,6 +3,7 @@ import React from "react";
 class Card extends React.Component {
   render() {
     const {
+      cardID,
       cardName,
       cardDescription,
       cardAttr1,
@@ -10,7 +11,9 @@ class Card extends React.Component {
       cardAttr3,
       cardImage,
       cardRare,
-      cardTrunfo
+      cardTrunfo,
+      deleteButton = false,
+      handlerFuncDelete = () => ''
     } = this.props;
     return (
       <section>
@@ -28,6 +31,9 @@ class Card extends React.Component {
             cardTrunfo === true && <span data-testid="trunfo-card">Super Trunfo</span>
           }
         </div>
+        {
+          deleteButton === true && <button type="button" name={`button-${cardID}${cardTrunfo === true ? '-Trunfo' : ''}`} onClick={handlerFuncDelete} data-testid="delete-button">Excluir</button>
+        }
       </section>
     );
   }

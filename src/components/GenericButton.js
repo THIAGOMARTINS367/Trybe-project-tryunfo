@@ -2,8 +2,7 @@ import React from "react";
 
 class GenericButton extends React.Component {
   render() {
-    const { buttonType, buttonContent, disabled, onClickEvent = () => ' ', dataTestid } =
-      this.props;
+    const { buttonType, buttonContent, disabled, onClickEvent, dataTestid } = this.props;
     return (
       <button
         type={buttonType}

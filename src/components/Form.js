@@ -18,7 +18,7 @@ class Form extends React.Component {
       cardTrunfo,
       hasTrunfo,
       isSaveButtonDisabled,
-      onInputChange = () => '',
+      onInputChange,
       onSaveButtonClick,
     } = this.props;
     return (
@@ -75,6 +75,7 @@ class Form extends React.Component {
           labelContent="Super Trunfo ?"
           checked={cardTrunfo}
           onChangeEvent={onInputChange}
+          hasTrunfo={hasTrunfo}
           dataTestid="trunfo-input"
         />
         <GenericButton
