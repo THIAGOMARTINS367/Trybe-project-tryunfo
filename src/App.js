@@ -3,6 +3,10 @@ import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
 import InputAndPlaceholder from './components/InputAndPlaceholder';
+import SelectAndPlaceholder from './components/SelectAndPlaceholder';
+import LabelAndSelect from './components/LabelAndSelect';
+import './App.css'
+
 
 class App extends React.Component {
   constructor() {
@@ -19,7 +23,9 @@ class App extends React.Component {
       buttonDisabled: true,
       hasTrunfo: false,
       createdLetters: [],
-      temporaryData: []
+      temporaryData: [],
+      filterByRarity: 'todas',
+      filterLettersByName: ''
     }
 
     this.saveFormFieldDataInState = this.saveFormFieldDataInState.bind(this);
@@ -28,6 +34,7 @@ class App extends React.Component {
     this.saveLetterInState = this.saveLetterInState.bind(this);
     this.deleteCardFromDeck = this.deleteCardFromDeck.bind(this);
     this.filterLettersByName = this.filterLettersByName.bind(this);
+    this.filterByRarity = this.filterByRarity.bind(this);
   }
 
   validateFormFieldsLength() {
@@ -147,16 +154,63 @@ class App extends React.Component {
 
   filterLettersByName({ target }) {
     const { value } = target;
-    const allCardsNames = '';
     const temporaryData = []
+    const filterByRarity = this.state.filterByRarity;
+    console.log('value: ', value)
     this.state.createdLetters.map((element) => {
-      if (element.nameInput.includes(value)) {
-        temporaryData.push(element);
-      } else if(value.length === 0) {
-        temporaryData.push(element);
+      if (filterByRarity === 'todas') {
+        if (element.nameInput.includes(value)) {
+          temporaryData.push(element);
+        } else if(value.length === 0) {
+          temporaryData.push(element);
+        }
+      } else {
+        if (element.nameInput.includes(value) && element.rareInput === filterByRarity) {
+          temporaryData.push(element);
+        } else if (value.length === 0 && element.rareInput === filterByRarity) {
+          temporaryData.push(element);
+        }
       }
+      
     });
-    this.setState({ temporaryData: temporaryData });
+    this.setState({ temporaryData: temporaryData, filterLettersByName: value });
+    // if (this.state.filterByRarity !== 'todas') {
+    //   console.log('CHAMOU filterByRarity', value)
+    //   this.filterByRarity;
+    // }
+  }
+
+  filterByRarity({ target }) {
+    const { value } = target;
+    const temporaryData = []
+    const filterLettersByName = this.state.filterLettersByName;
+    this.state.createdLetters.map((element) => {
+      if (filterLettersByName.length === 0) {
+        if (element.rareInput === value) {
+          temporaryData.push(element);
+        } else if(value === 'todas') {
+          temporaryData.push(element);
+        }
+      } else {
+        if (
+          element.rareInput === value &&
+          element.nameInput.includes(filterLettersByName)
+        ) {
+          temporaryData.push(element);
+        } else if (
+          value === "todas" &&
+          element.nameInput.includes(filterLettersByName)
+        ) {
+          temporaryData.push(element);
+        }
+      }
+      
+    });
+    this.setState({ temporaryData: temporaryData, filterByRarity: value });
+    // if (this.state.filterLettersByName.length > 0) {
+    //   console.log('CHAMOU filterLettersByName', value)
+    //   this.filterLettersByName();
+    // }
   }
 
   render() {
@@ -190,26 +244,42 @@ class App extends React.Component {
         />
         <hr />
         <h3>Filtros de Busca</h3>
-        <InputAndPlaceholder inputType="text" placeholderContent="Nome da Carta" onChangeEvent={this.filterLettersByName} dataTestid="name-filter"/>
+        <InputAndPlaceholder
+          inputType="text"
+          placeholderContent="Nome da Carta"
+          onChangeEvent={this.filterLettersByName}
+          dataTestid="name-filter"
+        /> <br />
+        <LabelAndSelect
+          labelContent="Raridade"
+          optionsContent={["todas", "normal", "raro", "muito raro"]}
+          value={this.state.filterByRarity}
+          onChangeEvent={this.filterByRarity}
+          dataTestid="rare-filter"
+        />
+        {/* <SelectAndPlaceholder
+          placeholderContent="Raridade"
+          optionsContent={["todas", "normal", "raro", "muito raro"]}
+          onChangeEvent={this.filterByRarity}
+          dataTestid="rare-filter"
+        /> */}
         <hr />
-        {
-          this.state.temporaryData.map((element) => (
-            <Card
-              key={`${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}`}
-              cardID={element.nameInput}
-              cardName={element.nameInput}
-              cardDescription={element.descriptionInput}
-              cardAttr1={element.attr1Input}
-              cardAttr2={element.attr2Input}
-              cardAttr3={element.attr3Input}
-              cardImage={element.imageInput}
-              cardRare={element.rareInput}
-              cardTrunfo={element.trunfoInput}
-              deleteButton={true}
-              handlerFuncDelete={this.deleteCardFromDeck}
-            />
-          ))
-        }
+        {this.state.temporaryData.map((element) => (
+          <Card
+            key={`${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}`}
+            cardID={element.nameInput}
+            cardName={element.nameInput}
+            cardDescription={element.descriptionInput}
+            cardAttr1={element.attr1Input}
+            cardAttr2={element.attr2Input}
+            cardAttr3={element.attr3Input}
+            cardImage={element.imageInput}
+            cardRare={element.rareInput}
+            cardTrunfo={element.trunfoInput}
+            deleteButton={true}
+            handlerFuncDelete={this.deleteCardFromDeck}
+          />
+        ))}
       </main>
     );
   }
