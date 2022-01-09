@@ -3,9 +3,9 @@ import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
 import InputAndPlaceholder from './components/InputAndPlaceholder';
-import SelectAndPlaceholder from './components/SelectAndPlaceholder';
-import LabelAndSelect from './components/LabelAndSelect';
 import './App.css'
+import LabelAndCheckboxFilter from './components/LabelAndCheckboxFilter';
+import LabelAndSelectFilter from './components/LabelAndSelectFilter';
 
 
 class App extends React.Component {
@@ -25,7 +25,9 @@ class App extends React.Component {
       createdLetters: [],
       temporaryData: [],
       filterByRarity: 'todas',
-      filterLettersByName: ''
+      filterLettersByName: '',
+      filterByTrunfo: false,
+      disableOtherSearches: false
     }
 
     this.saveFormFieldDataInState = this.saveFormFieldDataInState.bind(this);
@@ -35,6 +37,7 @@ class App extends React.Component {
     this.deleteCardFromDeck = this.deleteCardFromDeck.bind(this);
     this.filterLettersByName = this.filterLettersByName.bind(this);
     this.filterByRarity = this.filterByRarity.bind(this);
+    this.filterByTrunfo = this.filterByTrunfo.bind(this);
   }
 
   validateFormFieldsLength() {
@@ -44,8 +47,6 @@ class App extends React.Component {
     } else {
       this.validateFormAttributesFields(false);
     }
-    // console.log(imageInput)
-    
   }
 
   validateFormAttributesFields(previousValidatorAnswer) {
@@ -59,11 +60,7 @@ class App extends React.Component {
       attr3Input < 0,
       Number(attr1Input) + Number(attr2Input) + Number(attr3Input) > 210
     ];
-    // console.log(validations)
-    // console.log(Number(attr1Input) + Number(attr2Input) + Number(attr3Input))
-    // console.log('true? :', validations.includes(true));
     if (validations.includes(true) || previousValidatorAnswer === true) {
-      // console.log('entrou em true');
       this.setState({ buttonDisabled: true });
     } else {
       this.setState({ buttonDisabled: false });
@@ -81,7 +78,6 @@ class App extends React.Component {
         nameFormatted += name[index];
       }
     }
-    // console.log(nameFormatted);
     this.setState(
       { [nameFormatted]: type === "checkbox" ? checked : value },
       this.validateFormFieldsLength
@@ -113,7 +109,6 @@ class App extends React.Component {
     if (this.state.trunfoInput === true) {
       hasTrunfo = true
     }
-    console.log(hasTrunfo);
     this.state.createdLetters.push(object);
     this.setState({
       nameInput: "",
@@ -126,7 +121,6 @@ class App extends React.Component {
       hasTrunfo: hasTrunfo,
       trunfoInput: false
     }, () => this.setState({ temporaryData: this.state.createdLetters }));
-    console.log(this.state.createdLetters)
   }
 
   deleteCardFromDeck({ target }) {
@@ -144,7 +138,6 @@ class App extends React.Component {
           dataArray.push(element)
         }
       })
-      console.log('hasTrunfo:', hasTrunfo)
       this.setState({ createdLetters: dataArray }, () => this.setState({ temporaryData: this.state.createdLetters }));
       if (hasTrunfo === 'ofnurT-') {
         this.setState({ hasTrunfo: false });
@@ -156,7 +149,6 @@ class App extends React.Component {
     const { value } = target;
     const temporaryData = []
     const filterByRarity = this.state.filterByRarity;
-    console.log('value: ', value)
     this.state.createdLetters.map((element) => {
       if (filterByRarity === 'todas') {
         if (element.nameInput.includes(value)) {
@@ -171,13 +163,8 @@ class App extends React.Component {
           temporaryData.push(element);
         }
       }
-      
     });
     this.setState({ temporaryData: temporaryData, filterLettersByName: value });
-    // if (this.state.filterByRarity !== 'todas') {
-    //   console.log('CHAMOU filterByRarity', value)
-    //   this.filterByRarity;
-    // }
   }
 
   filterByRarity({ target }) {
@@ -204,13 +191,27 @@ class App extends React.Component {
           temporaryData.push(element);
         }
       }
-      
     });
     this.setState({ temporaryData: temporaryData, filterByRarity: value });
-    // if (this.state.filterLettersByName.length > 0) {
-    //   console.log('CHAMOU filterLettersByName', value)
-    //   this.filterLettersByName();
-    // }
+  }
+
+  filterByTrunfo({ target }) {
+    const { checked } = target;
+    const temporaryData = []
+    if (checked === true) {
+      this.setState({ disableOtherSearches: true});
+    }
+    this.state.createdLetters.map((element) => {
+      if (checked === true && element.trunfoInput === true) {
+        temporaryData.push(element);
+      }
+    });
+    this.setState({ temporaryData: temporaryData }, () => {
+      if (checked === false) {
+        this.setState({ disableOtherSearches: false});
+        this.filterLettersByName({target: { value: this.state.filterLettersByName}});
+      }
+    });
   }
 
   render() {
@@ -246,23 +247,21 @@ class App extends React.Component {
         <h3>Filtros de Busca</h3>
         <InputAndPlaceholder
           inputType="text"
+          value={this.state.filterLettersByName}
           placeholderContent="Nome da Carta"
+          disableSearch={this.state.disableOtherSearches}
           onChangeEvent={this.filterLettersByName}
           dataTestid="name-filter"
         /> <br />
-        <LabelAndSelect
+        <LabelAndSelectFilter
           labelContent="Raridade"
           optionsContent={["todas", "normal", "raro", "muito raro"]}
           value={this.state.filterByRarity}
+          disableSearch={this.state.disableOtherSearches}
           onChangeEvent={this.filterByRarity}
           dataTestid="rare-filter"
         />
-        {/* <SelectAndPlaceholder
-          placeholderContent="Raridade"
-          optionsContent={["todas", "normal", "raro", "muito raro"]}
-          onChangeEvent={this.filterByRarity}
-          dataTestid="rare-filter"
-        /> */}
+        <LabelAndCheckboxFilter labelContent="Super Trunfo" onChangeEvent={this.filterByTrunfo} dataTestid="trunfo-filter"/>
         <hr />
         {this.state.temporaryData.map((element) => (
           <Card

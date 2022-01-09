@@ -14,8 +14,8 @@ class LabelAndCheckbox extends React.Component {
                 checked={checked}
                 onChange={onChangeEvent}
                 data-testid={dataTestid}
-              />{" "}
-              {labelContent}{" "}
+              />
+              {labelContent}
             </label>
         }
       </section>
