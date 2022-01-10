@@ -54,16 +54,16 @@ class App extends React.Component {
 
   validateFormAttributesFields(previousValidatorAnswer) {
     const { attr1Input, attr2Input, attr3Input } = this.state;
-    const validations = [
-      attr1Input > 90,
-      attr1Input < 0,
-      attr2Input > 90,
-      attr2Input < 0,
-      attr3Input > 90,
-      attr3Input < 0,
-      Number(attr1Input) + Number(attr2Input) + Number(attr3Input) > 210,
-    ];
-    if (validations.includes(true) || previousValidatorAnswer === true) {
+    if (
+      attr1Input > 90
+      || attr2Input > 90
+      || attr3Input > 90
+      || attr1Input < 0
+      || attr2Input < 0
+      || attr3Input < 0
+      || Number(attr1Input) + Number(attr2Input) + Number(attr3Input) > 210
+      || previousValidatorAnswer === true
+    ) {
       this.setState({ buttonDisabled: true });
     } else {
       this.setState({ buttonDisabled: false });
@@ -156,10 +156,10 @@ class App extends React.Component {
 
   filterLettersByName({ target }) {
     const { value } = target;
-    const { filterByRarity } = this.state;
+    const { filterByRarity, createdLetters } = this.state;
     const temporaryData2 = [];
     const filterByRarity2 = filterByRarity;
-    this.state.createdLetters.map((element) => {
+    createdLetters.map((element) => {
       if (filterByRarity2 === 'todas') {
         if (element.nameInput.includes(value)) {
           temporaryData2.push(element);
@@ -298,7 +298,7 @@ class App extends React.Component {
         <br />
         <LabelAndSelectFilter
           labelContent="Raridade"
-          optionsContent={ 'todas, normal, raro, muito raro,' }
+          optionsContent="todas, normal, raro, muito raro,"
           value={ filterByRarity }
           selectFilterId="rare-filter-select"
           disableSearch={ disableOtherSearches }

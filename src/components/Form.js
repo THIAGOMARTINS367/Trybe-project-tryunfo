@@ -73,7 +73,7 @@ class Form extends React.Component {
         />
         <LabelAndSelect
           labelContent="Raridade"
-          optionsContent={ 'normal, raro, muito raro,' }
+          optionsContent="normal, raro, muito raro,"
           value={ cardRare }
           selectId="form-rare-select"
           onChangeEvent={ onInputChange }

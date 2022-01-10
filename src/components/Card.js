@@ -78,6 +78,6 @@ Card.defaultProps = {
   cardID: '',
   deleteButton: false,
   handlerFuncDelete: () => '',
-}
+};
 
 export default Card;

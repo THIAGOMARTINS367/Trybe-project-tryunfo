@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class LabelAndSelect extends React.Component { //'todas, normal, raro, muito raro'
+class LabelAndSelect extends React.Component {
   render() {
     const {
       labelContent,
@@ -11,9 +11,9 @@ class LabelAndSelect extends React.Component { //'todas, normal, raro, muito rar
       onChangeEvent,
       dataTestid,
     } = this.props;
-    let optionsContentFormatted = optionsContent.replace(', ', ',');
+    const optionsContentFormatted = optionsContent.replace(', ', ',');
     let optionContent = '';
-    let optionsContentArray = [];
+    const optionsContentArray = [];
     for (let index = 0; index < optionsContentFormatted.length; index += 1) {
       if (optionsContentFormatted[index] === ',') {
         optionsContentArray.push(optionContent);
