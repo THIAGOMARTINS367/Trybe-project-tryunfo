@@ -141,13 +141,12 @@ class App extends React.Component {
     this.setState({ createdLetters: [] }, () => {
       previousCreatedLetters.map((element) => {
         if (element.nameInput !== nameFormatted) {
-          return dataArray.push(element);
+          dataArray.push(element);
         }
       });
       this.setState({ createdLetters: dataArray }, () => {
-        this.setState({ temporaryData: createdLetters },);
-        }
-      );
+        this.setState({ temporaryData: createdLetters });
+      });
       if (hasTrunfo === 'ofnurT-') {
         this.setState({ hasTrunfo: false });
       }
@@ -191,18 +190,18 @@ class App extends React.Component {
       if (filterLettersByName.length === 0) {
         if (element.rareInput === value) {
           temporaryData2.push(element);
-        } else if(value === 'todas') {
+        } else if (value === 'todas') {
           temporaryData2.push(element);
         }
       } else {
         if (
-          element.rareInput === value &&
-          element.nameInput.includes(filterLettersByName)
+          element.rareInput === value
+          && element.nameInput.includes(filterLettersByName)
         ) {
           temporaryData2.push(element);
         } else if (
-          value === 'todas' &&
-          element.nameInput.includes(filterLettersByName)
+          value === 'todas'
+          && element.nameInput.includes(filterLettersByName)
         ) {
           temporaryData2.push(element);
         }
@@ -215,7 +214,7 @@ class App extends React.Component {
     const { checked } = target;
     const temporaryData2 = [];
     if (checked === true) {
-      this.setState({ disableOtherSearches: true});
+      this.setState({ disableOtherSearches: true });
     }
     this.state.createdLetters.map((element) => {
       if (checked === true && element.trunfoInput === true) {
@@ -231,7 +230,7 @@ class App extends React.Component {
             target: { value: this.state.filterLettersByName },
           });
         }
-      }
+      },
     );
   }
 
@@ -277,7 +276,7 @@ class App extends React.Component {
         <br />
         <LabelAndSelectFilter
           labelContent="Raridade"
-          optionsContent={ ["todas", "normal", "raro", "muito raro"] }
+          optionsContent={ ['todas', 'normal', 'raro', 'muito raro'] }
           value={ this.state.filterByRarity }
           selectFilterId="rare-filter-select"
           disableSearch={ this.state.disableOtherSearches }
@@ -295,7 +294,11 @@ class App extends React.Component {
         {
           this.state.temporaryData.map((element) => (
             <Card
-              key={ `${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}` }
+              key={ `${element.nameInput}
+                ${element.attr1Input}
+                ${element.attr2Input}
+                ${element.attr3Input}`
+              }
               cardID={ element.nameInput }
               cardName={ element.nameInput }
               cardDescription={ element.descriptionInput }
@@ -305,7 +308,7 @@ class App extends React.Component {
               cardImage={ element.imageInput }
               cardRare={ element.rareInput }
               cardTrunfo={ element.trunfoInput }
-              deleteButton={ true }
+              deleteButton
               handlerFuncDelete={ this.deleteCardFromDeck }
             />
           ))

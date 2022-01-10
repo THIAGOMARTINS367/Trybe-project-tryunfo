@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class LabelAndSelect extends React.Component {
   render() {
@@ -30,5 +31,14 @@ class LabelAndSelect extends React.Component {
     );
   }
 }
+
+LabelAndSelect.propTypes = {
+  labelContent: PropTypes.string.isRequired,
+  optionsContent: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  selectId: PropTypes.string.isRequired,
+  onChangeEvent: PropTypes.func.isRequired,
+  dataTestid: PropTypes.string.isRequired,
+};
 
 export default LabelAndSelect;

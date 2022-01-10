@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class LabelAndCheckboxFilter extends React.Component {
   render() {
@@ -26,5 +27,13 @@ class LabelAndCheckboxFilter extends React.Component {
     );
   }
 }
+
+LabelAndCheckboxFilter.propTypes = {
+  labelContent: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  checkboxFilterId: PropTypes.string.isRequired,
+  onChangeEvent: PropTypes.func.isRequired,
+  dataTestid: PropTypes.string.isRequired,
+};
 
 export default LabelAndCheckboxFilter;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class LabelAndSelectFilter extends React.Component {
   render() {
@@ -50,5 +51,15 @@ class LabelAndSelectFilter extends React.Component {
     );
   }
 }
+
+LabelAndSelectFilter.propTypes = {
+  labelContent: PropTypes.string.isRequired,
+  optionsContent: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  selectFilterId: PropTypes.string.isRequired,
+  disableSearch: PropTypes.bool.isRequired,
+  onChangeEvent: PropTypes.func.isRequired,
+  dataTestid: PropTypes.string.isRequired,
+};
 
 export default LabelAndSelectFilter;

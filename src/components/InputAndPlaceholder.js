@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class InputAndPlaceholder extends React.Component {
   render() {
@@ -36,5 +37,14 @@ class InputAndPlaceholder extends React.Component {
     );
   }
 }
+
+InputAndPlaceholder.propTypes = {
+  inputType: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholderContent: PropTypes.string.isRequired,
+  disableSearch: PropTypes.bool.isRequired,
+  onChangeEvent: PropTypes.func.isRequired,
+  dataTestid: PropTypes.string.isRequired,
+};
 
 export default InputAndPlaceholder;
