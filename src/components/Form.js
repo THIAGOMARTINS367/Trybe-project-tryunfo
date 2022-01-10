@@ -73,7 +73,7 @@ class Form extends React.Component {
         />
         <LabelAndSelect
           labelContent="Raridade"
-          optionsContent={ ['normal', 'raro', 'muito raro'] }
+          optionsContent={ 'normal, raro, muito raro,' }
           value={ cardRare }
           selectId="form-rare-select"
           onChangeEvent={ onInputChange }
@@ -103,17 +103,17 @@ Form.propTypes = {
   cardName: PropTypes.string.isRequired,
   cardDescription: PropTypes.string.isRequired,
   cardAttr1: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   cardAttr2: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   cardAttr3: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class LabelAndSelect extends React.Component {
+class LabelAndSelect extends React.Component { //'todas, normal, raro, muito raro'
   render() {
     const {
       labelContent,
@@ -11,6 +11,17 @@ class LabelAndSelect extends React.Component {
       onChangeEvent,
       dataTestid,
     } = this.props;
+    let optionsContentFormatted = optionsContent.replace(', ', ',');
+    let optionContent = '';
+    let optionsContentArray = [];
+    for (let index = 0; index < optionsContentFormatted.length; index += 1) {
+      if (optionsContentFormatted[index] === ',') {
+        optionsContentArray.push(optionContent);
+        optionContent = '';
+      } else {
+        optionContent += optionsContentFormatted[index];
+      }
+    }
     return (
       <section>
         <label htmlFor={ selectId }>{ labelContent }</label>
@@ -22,7 +33,7 @@ class LabelAndSelect extends React.Component {
           data-testid={ dataTestid }
         >
           {
-            optionsContent.map((element) => (
+            optionsContentArray.map((element) => (
               <option key={ element }>{ element }</option>
             ))
           }
@@ -34,7 +45,7 @@ class LabelAndSelect extends React.Component {
 
 LabelAndSelect.propTypes = {
   labelContent: PropTypes.string.isRequired,
-  optionsContent: PropTypes.array.isRequired,
+  optionsContent: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   selectId: PropTypes.string.isRequired,
   onChangeEvent: PropTypes.func.isRequired,

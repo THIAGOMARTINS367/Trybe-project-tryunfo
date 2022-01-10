@@ -298,7 +298,7 @@ class App extends React.Component {
         <br />
         <LabelAndSelectFilter
           labelContent="Raridade"
-          optionsContent={ ['todas', 'normal', 'raro', 'muito raro'] }
+          optionsContent={ 'todas, normal, raro, muito raro,' }
           value={ filterByRarity }
           selectFilterId="rare-filter-select"
           disableSearch={ disableOtherSearches }

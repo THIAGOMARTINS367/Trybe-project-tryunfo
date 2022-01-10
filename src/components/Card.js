@@ -13,7 +13,7 @@ class Card extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
-      deleteButton = false,
+      deleteButton,
       handlerFuncDelete,
     } = this.props;
     return (
@@ -56,22 +56,28 @@ Card.propTypes = {
   cardName: PropTypes.string.isRequired,
   cardDescription: PropTypes.string.isRequired,
   cardAttr1: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   cardAttr2: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   cardAttr3: PropTypes.oneOfType([
-    PropTypes.number.isRequired,
-    PropTypes.string.isRequired,
-  ]),
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
   deleteButton: PropTypes.bool,
   handlerFuncDelete: PropTypes.func,
 };
+
+Card.defaultProps = {
+  cardID: '',
+  deleteButton: false,
+  handlerFuncDelete: () => '',
+}
 
 export default Card;
