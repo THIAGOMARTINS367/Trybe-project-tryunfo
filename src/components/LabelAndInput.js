@@ -13,7 +13,7 @@ class LabelAndInput extends React.Component {
     } = this.props;
     return (
       <section>
-        <label for={ inputId }>{ labelContent }</label>
+        <label htmlFor={ inputId }>{ labelContent }</label>
         <br />
         <input
           type={ inputType }

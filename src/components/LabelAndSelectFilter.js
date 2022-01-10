@@ -14,7 +14,7 @@ class LabelAndSelectFilter extends React.Component {
     } = this.props;
     return (
       <section>
-        <label for={ selectFilterId }>{ labelContent }</label>
+        <label htmlFor={ selectFilterId }>{ labelContent }</label>
         {
           disableSearch === true ? (
             <select

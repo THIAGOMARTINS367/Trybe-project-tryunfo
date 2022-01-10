@@ -12,7 +12,7 @@ class LabelAndCheckboxFilter extends React.Component {
     } = this.props;
     return (
       <section>
-        <label for={ checkboxFilterId }>
+        <label htmlFor={ checkboxFilterId }>
           <input
             type="checkbox"
             name={ dataTestid }

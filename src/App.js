@@ -297,8 +297,7 @@ class App extends React.Component {
               key={ `${element.nameInput}
                 ${element.attr1Input}
                 ${element.attr2Input}
-                ${element.attr3Input}`
-              }
+                ${element.attr3Input}`}
               cardID={ element.nameInput }
               cardName={ element.nameInput }
               cardDescription={ element.descriptionInput }

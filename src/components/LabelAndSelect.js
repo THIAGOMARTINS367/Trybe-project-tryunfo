@@ -13,7 +13,7 @@ class LabelAndSelect extends React.Component {
     } = this.props;
     return (
       <section>
-        <label for={ selectId }>{ labelContent }</label>
+        <label htmlFor={ selectId }>{ labelContent }</label>
         <select
           name={ dataTestid }
           value={ value }

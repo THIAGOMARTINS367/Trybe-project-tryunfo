@@ -12,7 +12,7 @@ class LabelAndTextarea extends React.Component {
     } = this.props;
     return (
       <section>
-        <label for={ textareaId }>{ labelContent }</label>
+        <label htmlFor={ textareaId }>{ labelContent }</label>
         <br />
         <textarea
           name={ dataTestid }

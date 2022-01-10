@@ -17,7 +17,7 @@ class LabelAndCheckbox extends React.Component {
           hasTrunfo === true ? (
             'Você já tem um Super Trunfo em seu baralho'
           ) : (
-            <label for={ checkboxId }>
+            <label htmlFor={ checkboxId }>
               <input
                 type="checkbox"
                 name={ dataTestid }

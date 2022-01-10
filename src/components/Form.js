@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import GenericButton from './GenericButton';
 import LabelAndCheckbox from './LabelAndCheckbox';
 import LabelAndInput from './LabelAndInput';
 import LabelAndSelect from './LabelAndSelect';
 import LabelAndTextarea from './LabelAndTextarea';
-import PropTypes from 'prop-types';
 
 class Form extends React.Component {
   render() {
