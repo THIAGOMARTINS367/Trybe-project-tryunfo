@@ -5,6 +5,7 @@ class LabelAndCheckbox extends React.Component {
     const {
       labelContent,
       checked,
+      checkboxId,
       onChangeEvent,
       hasTrunfo,
       dataTestid,
@@ -13,13 +14,14 @@ class LabelAndCheckbox extends React.Component {
       <section>
         {
           hasTrunfo === true ? (
-            "Você já tem um Super Trunfo em seu baralho"
+            'Você já tem um Super Trunfo em seu baralho'
           ) : (
-            <label>
+            <label for={ checkboxId }>
               <input
                 type="checkbox"
                 name={ dataTestid }
                 checked={ checked }
+                id={ checkboxId }
                 onChange={ onChangeEvent }
                 data-testid={ dataTestid }
               />

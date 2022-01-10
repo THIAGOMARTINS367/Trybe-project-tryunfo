@@ -6,17 +6,19 @@ class LabelAndInput extends React.Component {
       labelContent,
       inputType,
       value,
+      inputId,
       onChangeEvent,
       dataTestid,
     } = this.props;
     return (
       <section>
-        <label>{ labelContent }</label>
+        <label for={ inputId }>{ labelContent }</label>
         <br />
         <input
           type={ inputType }
           name={ dataTestid }
           value={ value }
+          id={ inputId }
           onChange={ onChangeEvent }
           data-testid={ dataTestid }
         />

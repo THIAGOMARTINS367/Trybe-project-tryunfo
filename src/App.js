@@ -240,71 +240,73 @@ class App extends React.Component {
       <main>
         <h1>Tryunfo</h1>
         <Form
-          cardName={this.state.nameInput}
-          cardDescription={this.state.descriptionInput}
-          cardAttr1={this.state.attr1Input}
-          cardAttr2={this.state.attr2Input}
-          cardAttr3={this.state.attr3Input}
-          cardImage={this.state.imageInput}
-          cardRare={this.state.rareInput}
-          cardTrunfo={this.state.trunfoInput}
-          hasTrunfo={this.state.hasTrunfo}
-          isSaveButtonDisabled={this.state.buttonDisabled}
-          onInputChange={this.saveFormFieldDataInState}
-          onSaveButtonClick={this.saveLetterInState}
+          cardName={ this.state.nameInput }
+          cardDescription={ this.state.descriptionInput }
+          cardAttr1={ this.state.attr1Input }
+          cardAttr2={ this.state.attr2Input }
+          cardAttr3={ this.state.attr3Input }
+          cardImage={ this.state.imageInput }
+          cardRare={ this.state.rareInput }
+          cardTrunfo={ this.state.trunfoInput }
+          hasTrunfo={ this.state.hasTrunfo }
+          isSaveButtonDisabled={ this.state.buttonDisabled }
+          onInputChange={ this.saveFormFieldDataInState }
+          onSaveButtonClick={ this.saveLetterInState }
         />
         <hr />
         <Card
-          cardName={this.state.nameInput}
-          cardDescription={this.state.descriptionInput}
-          cardAttr1={this.state.attr1Input}
-          cardAttr2={this.state.attr2Input}
-          cardAttr3={this.state.attr3Input}
-          cardImage={this.state.imageInput}
-          cardRare={this.state.rareInput}
-          cardTrunfo={this.state.trunfoInput}
+          cardName={ this.state.nameInput }
+          cardDescription={ this.state.descriptionInput }
+          cardAttr1={ this.state.attr1Input }
+          cardAttr2={ this.state.attr2Input }
+          cardAttr3={ this.state.attr3Input }
+          cardImage={ this.state.imageInput }
+          cardRare={ this.state.rareInput }
+          cardTrunfo={ this.state.trunfoInput }
         />
         <hr />
         <h3>Filtros de Busca</h3>
         <InputAndPlaceholder
           inputType="text"
-          value={this.state.filterLettersByName}
+          value={ this.state.filterLettersByName }
           placeholderContent="Nome da Carta"
-          disableSearch={this.state.disableOtherSearches}
-          onChangeEvent={this.filterLettersByName}
+          disableSearch={ this.state.disableOtherSearches }
+          onChangeEvent={ this.filterLettersByName }
           dataTestid="name-filter"
-        />{" "}
+        />
         <br />
         <LabelAndSelectFilter
           labelContent="Raridade"
-          optionsContent={["todas", "normal", "raro", "muito raro"]}
-          value={this.state.filterByRarity}
-          disableSearch={this.state.disableOtherSearches}
-          onChangeEvent={this.filterByRarity}
+          optionsContent={ ["todas", "normal", "raro", "muito raro"] }
+          value={ this.state.filterByRarity }
+          selectFilterId="rare-filter-select"
+          disableSearch={ this.state.disableOtherSearches }
+          onChangeEvent={ this.filterByRarity }
           dataTestid="rare-filter"
         />
         <LabelAndCheckboxFilter
           labelContent="Super Trunfo"
-          checked={this.state.filterByTrunfo}
-          onChangeEvent={this.filterByTrunfo}
+          checked={ this.state.filterByTrunfo }
+          checkboxFilterId="trunfo-filter-checkbox"
+          onChangeEvent={ this.filterByTrunfo }
           dataTestid="trunfo-filter"
         />
         <hr />
         {
           this.state.temporaryData.map((element) => (
             <Card
-              key={`${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}`}
-              cardID={element.nameInput}
-              cardName={element.nameInput}
-              cardDescription={element.descriptionInput}
-              cardAttr1={element.attr1Input}
-              cardAttr2={element.attr2Input}
-              cardAttr3={element.attr3Input}
-              cardImage={element.imageInput}
-              cardRare={element.rareInput}
-              cardTrunfo={element.trunfoInput}
-              deleteButton={true}
-              handlerFuncDelete={this.deleteCardFromDeck}
+              key={ `${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}` }
+              cardID={ element.nameInput }
+              cardName={ element.nameInput }
+              cardDescription={ element.descriptionInput }
+              cardAttr1={ element.attr1Input }
+              cardAttr2={ element.attr2Input }
+              cardAttr3={ element.attr3Input }
+              cardImage={ element.imageInput }
+              cardRare={ element.rareInput }
+              cardTrunfo={ element.trunfoInput }
+              deleteButton={ true }
+              handlerFuncDelete={ this.deleteCardFromDeck }
             />
           ))
         }

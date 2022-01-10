@@ -6,18 +6,20 @@ class LabelAndSelectFilter extends React.Component {
       labelContent,
       optionsContent,
       value,
+      selectFilterId,
       disableSearch,
       onChangeEvent,
       dataTestid,
     } = this.props;
     return (
       <section>
-        <label>{ labelContent }</label>
+        <label for={ selectFilterId }>{ labelContent }</label>
         {
           disableSearch === true ? (
             <select
               name={ dataTestid }
               value={ value }
+              id={ selectFilterId }
               disabled
               onChange={ onChangeEvent }
               data-testid={ dataTestid }
@@ -32,6 +34,7 @@ class LabelAndSelectFilter extends React.Component {
             <select
               name={ dataTestid }
               value={ value }
+              id={ selectFilterId }
               onChange={ onChangeEvent }
               data-testid={ dataTestid }
             >

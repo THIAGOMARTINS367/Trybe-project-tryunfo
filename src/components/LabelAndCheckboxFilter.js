@@ -2,14 +2,21 @@ import React from 'react';
 
 class LabelAndCheckboxFilter extends React.Component {
   render() {
-    const { labelContent, checked, onChangeEvent, dataTestid, } = this.props;
+    const {
+      labelContent,
+      checked,
+      checkboxFilterId,
+      onChangeEvent,
+      dataTestid,
+    } = this.props;
     return (
       <section>
-        <label>
+        <label for={ checkboxFilterId }>
           <input
             type="checkbox"
             name={ dataTestid }
             checked={ checked }
+            id={ checkboxFilterId }
             onChange={ onChangeEvent }
             data-testid={ dataTestid }
           />

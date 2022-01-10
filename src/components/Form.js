@@ -27,12 +27,14 @@ class Form extends React.Component {
           labelContent="Nome"
           inputType="text"
           value={ cardName }
+          inputId="form-name-input"
           onChangeEvent={ onInputChange }
           dataTestid="name-input"
         />
         <LabelAndTextarea
           labelContent="Descrição"
           value={ cardDescription }
+          textareaId="form-description-textarea"
           onChangeEvent={ onInputChange }
           dataTestid="description-input"
         />
@@ -40,6 +42,7 @@ class Form extends React.Component {
           labelContent="Atributo1"
           inputType="number"
           value={ cardAttr1 }
+          inputId="form-attr1-input"
           onChangeEvent={ onInputChange }
           dataTestid="attr1-input"
         />
@@ -47,6 +50,7 @@ class Form extends React.Component {
           labelContent="Atributo2"
           inputType="number"
           value={ cardAttr2 }
+          inputId="form-attr2-input"
           onChangeEvent={ onInputChange }
           dataTestid="attr2-input"
         />
@@ -54,6 +58,7 @@ class Form extends React.Component {
           labelContent="Atributo3"
           inputType="number"
           value={ cardAttr3 }
+          inputId="form-attr3-input"
           onChangeEvent={ onInputChange }
           dataTestid="attr3-input"
         />
@@ -61,6 +66,7 @@ class Form extends React.Component {
           labelContent="Imagem"
           inputType="text"
           value={ cardImage }
+          inputId="form-image-input"
           onChangeEvent={ onInputChange }
           dataTestid="image-input"
         />
@@ -68,12 +74,14 @@ class Form extends React.Component {
           labelContent="Raridade"
           optionsContent={ ['normal', 'raro', 'muito raro'] }
           value={ cardRare }
+          selectId="form-rare-select"
           onChangeEvent={ onInputChange }
           dataTestid="rare-input"
         />
         <LabelAndCheckbox
           labelContent="Super Trunfo ?"
           checked={ cardTrunfo }
+          checkboxId="form-trunfo-checkbox"
           onChangeEvent={ onInputChange }
           hasTrunfo={ hasTrunfo }
           dataTestid="trunfo-input"
