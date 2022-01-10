@@ -161,19 +161,12 @@ class App extends React.Component {
     const filterByRarity2 = filterByRarity;
     createdLetters.map((element) => {
       if (filterByRarity2 === 'todas') {
-        if (element.nameInput.includes(value)) {
-          temporaryData2.push(element);
-        } else if (value.length === 0) {
+        if (element.nameInput.includes(value) || value.length === 0) {
           temporaryData2.push(element);
         }
       } else {
         if (
           element.nameInput.includes(value)
-          && element.rareInput === filterByRarity2
-        ) {
-          temporaryData2.push(element);
-        } else if (
-          value.length === 0
           && element.rareInput === filterByRarity2
         ) {
           temporaryData2.push(element);
@@ -190,19 +183,12 @@ class App extends React.Component {
     const temporaryData2 = [];
     createdLetters.map((element) => {
       if (filterLettersByName.length === 0) {
-        if (element.rareInput === value) {
-          temporaryData2.push(element);
-        } else if (value === 'todas') {
+        if (element.rareInput === value || value === 'todas') {
           temporaryData2.push(element);
         }
       } else {
         if (
-          element.rareInput === value
-          && element.nameInput.includes(filterLettersByName)
-        ) {
-          temporaryData2.push(element);
-        } else if (
-          value === 'todas'
+          (element.rareInput === value || value === 'todas')
           && element.nameInput.includes(filterLettersByName)
         ) {
           temporaryData2.push(element);
