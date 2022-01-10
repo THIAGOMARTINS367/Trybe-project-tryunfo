@@ -1,8 +1,15 @@
-import React from "react";
+import React from 'react';
 
 class InputAndPlaceholder extends React.Component {
   render() {
-    const { inputType, value, placeholderContent, disableSearch, onChangeEvent, dataTestid } = this.props;
+    const {
+      inputType,
+      value,
+      placeholderContent,
+      disableSearch,
+      onChangeEvent,
+      dataTestid,
+    } = this.props;
     return (
       <section>
         {

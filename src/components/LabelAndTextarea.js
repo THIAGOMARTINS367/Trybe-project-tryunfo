@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class LabelAndTextarea extends React.Component {
   render() {
@@ -6,7 +6,12 @@ class LabelAndTextarea extends React.Component {
     return (
       <section>
         <label>{labelContent}</label> <br />
-        <textarea name={dataTestid} value={value} onChange={onChangeEvent} data-testid={dataTestid}/>
+        <textarea
+          name={dataTestid}
+          value={value}
+          onChange={onChangeEvent}
+          data-testid={dataTestid}
+        />
       </section>
     );
   }

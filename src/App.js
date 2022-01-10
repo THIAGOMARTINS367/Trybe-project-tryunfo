@@ -1,16 +1,14 @@
-
 import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
 import InputAndPlaceholder from './components/InputAndPlaceholder';
-import './App.css'
+import './App.css';
 import LabelAndCheckboxFilter from './components/LabelAndCheckboxFilter';
 import LabelAndSelectFilter from './components/LabelAndSelectFilter';
 
-
 class App extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       nameInput: '',
       descriptionInput: '',
@@ -27,8 +25,8 @@ class App extends React.Component {
       filterByRarity: 'todas',
       filterLettersByName: '',
       filterByTrunfo: false,
-      disableOtherSearches: false
-    }
+      disableOtherSearches: false,
+    };
 
     this.saveFormFieldDataInState = this.saveFormFieldDataInState.bind(this);
     this.validateFormFieldsLength = this.validateFormFieldsLength.bind(this);
@@ -42,7 +40,12 @@ class App extends React.Component {
 
   validateFormFieldsLength() {
     const { nameInput, descriptionInput, imageInput, rareInput } = this.state;
-    if (nameInput.length === 0 || descriptionInput.length === 0 || imageInput.length === 0 || rareInput.length === 0) {
+    if (
+      nameInput.length === 0 ||
+      descriptionInput.length === 0 ||
+      imageInput.length === 0 ||
+      rareInput.length === 0
+    ) {
       this.validateFormAttributesFields(true);
     } else {
       this.validateFormAttributesFields(false);
@@ -58,7 +61,7 @@ class App extends React.Component {
       attr2Input < 0,
       attr3Input > 90,
       attr3Input < 0,
-      Number(attr1Input) + Number(attr2Input) + Number(attr3Input) > 210
+      Number(attr1Input) + Number(attr2Input) + Number(attr3Input) > 210,
     ];
     if (validations.includes(true) || previousValidatorAnswer === true) {
       this.setState({ buttonDisabled: true });
@@ -79,8 +82,8 @@ class App extends React.Component {
       }
     }
     this.setState(
-      { [nameFormatted]: type === "checkbox" ? checked : value },
-      this.validateFormFieldsLength
+      { [nameFormatted]: type === 'checkbox' ? checked : value },
+      this.validateFormFieldsLength,
     );
   }
 
@@ -94,6 +97,8 @@ class App extends React.Component {
       imageInput,
       rareInput,
       trunfoInput,
+      createdLetters,
+      hasTrunfo,
     } = this.state;
     const object = {
       nameInput,
@@ -103,42 +108,44 @@ class App extends React.Component {
       attr3Input,
       imageInput,
       rareInput,
-      trunfoInput: trunfoInput
+      trunfoInput,
+    };
+    let hasTrunfo2 = hasTrunfo;
+    if (trunfoInput === true) {
+      hasTrunfo2 = true;
     }
-    let hasTrunfo = this.state.hasTrunfo;
-    if (this.state.trunfoInput === true) {
-      hasTrunfo = true
-    }
-    this.state.createdLetters.push(object);
+    createdLetters.push(object);
     this.setState({
-      nameInput: "",
-      descriptionInput: "",
-      imageInput: "",
+      nameInput: '',
+      descriptionInput: '',
+      imageInput: '',
       attr1Input: 0,
       attr2Input: 0,
       attr3Input: 0,
-      rareInput: "normal",
-      hasTrunfo: hasTrunfo,
-      trunfoInput: false
-    }, () => this.setState({ temporaryData: this.state.createdLetters }));
+      rareInput: 'normal',
+      hasTrunfo: hasTrunfo2,
+      trunfoInput: false,
+    }, () => this.setState({ temporaryData: createdLetters }));
   }
 
   deleteCardFromDeck({ target }) {
     const { name } = target;
-    let nameFormatted = name.replace('button-','').replace('-Trunfo', '');
+    const nameFormatted = name.replace('button-', '').replace('-Trunfo', '');
     let hasTrunfo = '';
     const previousCreatedLetters = this.state.createdLetters;
     const dataArray = [];
-    for (let index = 0; index < 7; index++) {
-      hasTrunfo += name[name.length -1 - index];
+    for (let index = 0; index < 7; index += 1) {
+      hasTrunfo += name[name.length - 1 - index];
     }
     this.setState({ createdLetters: [] }, () => {
       previousCreatedLetters.map((element) => {
         if (element.nameInput !== nameFormatted) {
-          dataArray.push(element)
+          dataArray.push(element);
         }
-      })
-      this.setState({ createdLetters: dataArray }, () => this.setState({ temporaryData: this.state.createdLetters }));
+      });
+      this.setState({ createdLetters: dataArray }, () =>
+        this.setState({ temporaryData: this.state.createdLetters })
+      );
       if (hasTrunfo === 'ofnurT-') {
         this.setState({ hasTrunfo: false });
       }
@@ -147,19 +154,25 @@ class App extends React.Component {
 
   filterLettersByName({ target }) {
     const { value } = target;
-    const temporaryData = []
+    const temporaryData = [];
     const filterByRarity = this.state.filterByRarity;
     this.state.createdLetters.map((element) => {
       if (filterByRarity === 'todas') {
         if (element.nameInput.includes(value)) {
           temporaryData.push(element);
-        } else if(value.length === 0) {
+        } else if (value.length === 0) {
           temporaryData.push(element);
         }
       } else {
-        if (element.nameInput.includes(value) && element.rareInput === filterByRarity) {
+        if (
+          element.nameInput.includes(value) &&
+          element.rareInput === filterByRarity
+        ) {
           temporaryData.push(element);
-        } else if (value.length === 0 && element.rareInput === filterByRarity) {
+        } else if (
+          value.length === 0 &&
+          element.rareInput === filterByRarity
+        ) {
           temporaryData.push(element);
         }
       }
@@ -169,7 +182,7 @@ class App extends React.Component {
 
   filterByRarity({ target }) {
     const { value } = target;
-    const temporaryData = []
+    const temporaryData = [];
     const filterLettersByName = this.state.filterLettersByName;
     this.state.createdLetters.map((element) => {
       if (filterLettersByName.length === 0) {
@@ -185,7 +198,7 @@ class App extends React.Component {
         ) {
           temporaryData.push(element);
         } else if (
-          value === "todas" &&
+          value === 'todas' &&
           element.nameInput.includes(filterLettersByName)
         ) {
           temporaryData.push(element);
@@ -197,7 +210,7 @@ class App extends React.Component {
 
   filterByTrunfo({ target }) {
     const { checked } = target;
-    const temporaryData = []
+    const temporaryData = [];
     if (checked === true) {
       this.setState({ disableOtherSearches: true});
     }
@@ -206,12 +219,17 @@ class App extends React.Component {
         temporaryData.push(element);
       }
     });
-    this.setState({ temporaryData: temporaryData }, () => {
-      if (checked === false) {
-        this.setState({ disableOtherSearches: false});
-        this.filterLettersByName({target: { value: this.state.filterLettersByName}});
+    this.setState(
+      { temporaryData: temporaryData, filterByTrunfo: checked },
+      () => {
+        if (checked === false) {
+          this.setState({ disableOtherSearches: false });
+          this.filterLettersByName({
+            target: { value: this.state.filterLettersByName },
+          });
+        }
       }
-    });
+    );
   }
 
   render() {
@@ -252,7 +270,8 @@ class App extends React.Component {
           disableSearch={this.state.disableOtherSearches}
           onChangeEvent={this.filterLettersByName}
           dataTestid="name-filter"
-        /> <br />
+        />{" "}
+        <br />
         <LabelAndSelectFilter
           labelContent="Raridade"
           optionsContent={["todas", "normal", "raro", "muito raro"]}
@@ -261,24 +280,31 @@ class App extends React.Component {
           onChangeEvent={this.filterByRarity}
           dataTestid="rare-filter"
         />
-        <LabelAndCheckboxFilter labelContent="Super Trunfo" onChangeEvent={this.filterByTrunfo} dataTestid="trunfo-filter"/>
+        <LabelAndCheckboxFilter
+          labelContent="Super Trunfo"
+          checked={this.state.filterByTrunfo}
+          onChangeEvent={this.filterByTrunfo}
+          dataTestid="trunfo-filter"
+        />
         <hr />
-        {this.state.temporaryData.map((element) => (
-          <Card
-            key={`${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}`}
-            cardID={element.nameInput}
-            cardName={element.nameInput}
-            cardDescription={element.descriptionInput}
-            cardAttr1={element.attr1Input}
-            cardAttr2={element.attr2Input}
-            cardAttr3={element.attr3Input}
-            cardImage={element.imageInput}
-            cardRare={element.rareInput}
-            cardTrunfo={element.trunfoInput}
-            deleteButton={true}
-            handlerFuncDelete={this.deleteCardFromDeck}
-          />
-        ))}
+        {
+          this.state.temporaryData.map((element) => (
+            <Card
+              key={`${element.nameInput}${element.attr1Input}${element.attr2Input}${element.attr3Input}`}
+              cardID={element.nameInput}
+              cardName={element.nameInput}
+              cardDescription={element.descriptionInput}
+              cardAttr1={element.attr1Input}
+              cardAttr2={element.attr2Input}
+              cardAttr3={element.attr3Input}
+              cardImage={element.imageInput}
+              cardRare={element.rareInput}
+              cardTrunfo={element.trunfoInput}
+              deleteButton={true}
+              handlerFuncDelete={this.deleteCardFromDeck}
+            />
+          ))
+        }
       </main>
     );
   }

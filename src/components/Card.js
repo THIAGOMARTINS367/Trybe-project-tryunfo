@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class Card extends React.Component {
   render() {
@@ -13,7 +13,7 @@ class Card extends React.Component {
       cardRare,
       cardTrunfo,
       deleteButton = false,
-      handlerFuncDelete = () => ''
+      handlerFuncDelete = () => '',
     } = this.props;
     return (
       <section>
@@ -28,11 +28,22 @@ class Card extends React.Component {
         <span data-testid="rare-card">{cardRare}</span>
         <div>
           {
-            cardTrunfo === true && <span data-testid="trunfo-card">Super Trunfo</span>
+            cardTrunfo === true && (
+              <span data-testid="trunfo-card">Super Trunfo</span>
+            )
           }
         </div>
         {
-          deleteButton === true && <button type="button" name={`button-${cardID}${cardTrunfo === true ? '-Trunfo' : ''}`} onClick={handlerFuncDelete} data-testid="delete-button">Excluir</button>
+          deleteButton === true && (
+            <button
+              type="button"
+              name={`button-${cardID}${cardTrunfo === true ? '-Trunfo' : ''}`}
+              onClick={handlerFuncDelete}
+              data-testid="delete-button"
+            >
+              Excluir
+            </button>
+          )
         }
       </section>
     );
