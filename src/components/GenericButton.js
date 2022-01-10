@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
 
 class GenericButton extends React.Component {
   render() {
     const {
-      buttonType,
+      buttonType = 'button',
       buttonContent,
       disabled,
       onClickEvent,
-      dataTestid
+      dataTestid,
     } = this.props;
     return (
       <button
-        type={buttonType}
-        disabled={disabled}
-        onClick={onClickEvent}
-        data-testid={dataTestid}
+        type={ buttonType }
+        disabled={ disabled }
+        onClick={ onClickEvent }
+        data-testid={ dataTestid }
       >
-        {buttonContent}
+        { buttonContent }
       </button>
     );
   }

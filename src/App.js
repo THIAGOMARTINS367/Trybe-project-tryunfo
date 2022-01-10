@@ -41,10 +41,10 @@ class App extends React.Component {
   validateFormFieldsLength() {
     const { nameInput, descriptionInput, imageInput, rareInput } = this.state;
     if (
-      nameInput.length === 0 ||
-      descriptionInput.length === 0 ||
-      imageInput.length === 0 ||
-      rareInput.length === 0
+      nameInput.length === 0
+      || descriptionInput.length === 0
+      || imageInput.length === 0
+      || rareInput.length === 0
     ) {
       this.validateFormAttributesFields(true);
     } else {
@@ -130,9 +130,10 @@ class App extends React.Component {
 
   deleteCardFromDeck({ target }) {
     const { name } = target;
+    const { createdLetters } = this.state;
     const nameFormatted = name.replace('button-', '').replace('-Trunfo', '');
     let hasTrunfo = '';
-    const previousCreatedLetters = this.state.createdLetters;
+    const previousCreatedLetters = createdLetters;
     const dataArray = [];
     for (let index = 0; index < 7; index += 1) {
       hasTrunfo += name[name.length - 1 - index];
@@ -140,11 +141,12 @@ class App extends React.Component {
     this.setState({ createdLetters: [] }, () => {
       previousCreatedLetters.map((element) => {
         if (element.nameInput !== nameFormatted) {
-          dataArray.push(element);
+          return dataArray.push(element);
         }
       });
-      this.setState({ createdLetters: dataArray }, () =>
-        this.setState({ temporaryData: this.state.createdLetters })
+      this.setState({ createdLetters: dataArray }, () => {
+        this.setState({ temporaryData: createdLetters },);
+        }
       );
       if (hasTrunfo === 'ofnurT-') {
         this.setState({ hasTrunfo: false });
@@ -154,73 +156,74 @@ class App extends React.Component {
 
   filterLettersByName({ target }) {
     const { value } = target;
-    const temporaryData = [];
-    const filterByRarity = this.state.filterByRarity;
+    const { filterByRarity } = this.state;
+    const temporaryData2 = [];
+    const filterByRarity2 = filterByRarity;
     this.state.createdLetters.map((element) => {
-      if (filterByRarity === 'todas') {
+      if (filterByRarity2 === 'todas') {
         if (element.nameInput.includes(value)) {
-          temporaryData.push(element);
+          temporaryData2.push(element);
         } else if (value.length === 0) {
-          temporaryData.push(element);
+          temporaryData2.push(element);
         }
       } else {
         if (
-          element.nameInput.includes(value) &&
-          element.rareInput === filterByRarity
+          element.nameInput.includes(value)
+          && element.rareInput === filterByRarity2
         ) {
-          temporaryData.push(element);
+          temporaryData2.push(element);
         } else if (
-          value.length === 0 &&
-          element.rareInput === filterByRarity
+          value.length === 0
+          && element.rareInput === filterByRarity2
         ) {
-          temporaryData.push(element);
+          temporaryData2.push(element);
         }
       }
     });
-    this.setState({ temporaryData: temporaryData, filterLettersByName: value });
+    this.setState({ temporaryData: temporaryData2, filterLettersByName: value });
   }
 
   filterByRarity({ target }) {
     const { value } = target;
-    const temporaryData = [];
+    const temporaryData2 = [];
     const filterLettersByName = this.state.filterLettersByName;
     this.state.createdLetters.map((element) => {
       if (filterLettersByName.length === 0) {
         if (element.rareInput === value) {
-          temporaryData.push(element);
+          temporaryData2.push(element);
         } else if(value === 'todas') {
-          temporaryData.push(element);
+          temporaryData2.push(element);
         }
       } else {
         if (
           element.rareInput === value &&
           element.nameInput.includes(filterLettersByName)
         ) {
-          temporaryData.push(element);
+          temporaryData2.push(element);
         } else if (
           value === 'todas' &&
           element.nameInput.includes(filterLettersByName)
         ) {
-          temporaryData.push(element);
+          temporaryData2.push(element);
         }
       }
     });
-    this.setState({ temporaryData: temporaryData, filterByRarity: value });
+    this.setState({ temporaryData: temporaryData2, filterByRarity: value });
   }
 
   filterByTrunfo({ target }) {
     const { checked } = target;
-    const temporaryData = [];
+    const temporaryData2 = [];
     if (checked === true) {
       this.setState({ disableOtherSearches: true});
     }
     this.state.createdLetters.map((element) => {
       if (checked === true && element.trunfoInput === true) {
-        temporaryData.push(element);
+        temporaryData2.push(element);
       }
     });
     this.setState(
-      { temporaryData: temporaryData, filterByTrunfo: checked },
+      { temporaryData: temporaryData2, filterByTrunfo: checked },
       () => {
         if (checked === false) {
           this.setState({ disableOtherSearches: false });

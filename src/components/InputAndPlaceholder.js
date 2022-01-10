@@ -13,23 +13,24 @@ class InputAndPlaceholder extends React.Component {
     return (
       <section>
         {
-          disableSearch === true ? 
+          disableSearch === true ? (
             <input
-            type={inputType}
-            value={value}
-            placeholder={placeholderContent}
-            disabled
-            onChange={onChangeEvent}
-            data-testid={dataTestid}
+              type={ inputType }
+              value={ value }
+              placeholder={ placeholderContent }
+              disabled
+              onChange={ onChangeEvent }
+              data-testid={ dataTestid }
             />
-           : 
-           <input
-           type={inputType}
-           value={value}
-           placeholder={placeholderContent}
-           onChange={onChangeEvent}
-           data-testid={dataTestid}
-         />
+          ) : (
+            <input
+              type={ inputType }
+              value={ value }
+              placeholder={ placeholderContent }
+              onChange={ onChangeEvent }
+              data-testid={ dataTestid }
+            />
+          )
         }
       </section>
     );

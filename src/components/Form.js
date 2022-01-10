@@ -26,63 +26,63 @@ class Form extends React.Component {
         <LabelAndInput
           labelContent="Nome"
           inputType="text"
-          value={cardName}
-          onChangeEvent={onInputChange}
+          value={ cardName }
+          onChangeEvent={ onInputChange }
           dataTestid="name-input"
         />
         <LabelAndTextarea
           labelContent="Descrição"
-          value={cardDescription}
-          onChangeEvent={onInputChange}
+          value={ cardDescription }
+          onChangeEvent={ onInputChange }
           dataTestid="description-input"
         />
         <LabelAndInput
           labelContent="Atributo1"
           inputType="number"
-          value={cardAttr1}
-          onChangeEvent={onInputChange}
+          value={ cardAttr1 }
+          onChangeEvent={ onInputChange }
           dataTestid="attr1-input"
         />
         <LabelAndInput
           labelContent="Atributo2"
           inputType="number"
-          value={cardAttr2}
-          onChangeEvent={onInputChange}
+          value={ cardAttr2 }
+          onChangeEvent={ onInputChange }
           dataTestid="attr2-input"
         />
         <LabelAndInput
           labelContent="Atributo3"
           inputType="number"
-          value={cardAttr3}
-          onChangeEvent={onInputChange}
+          value={ cardAttr3 }
+          onChangeEvent={ onInputChange }
           dataTestid="attr3-input"
         />
         <LabelAndInput
           labelContent="Imagem"
           inputType="text"
-          value={cardImage}
-          onChangeEvent={onInputChange}
+          value={ cardImage }
+          onChangeEvent={ onInputChange }
           dataTestid="image-input"
         />
         <LabelAndSelect
           labelContent="Raridade"
-          optionsContent={["normal", "raro", "muito raro"]}
-          value={cardRare}
-          onChangeEvent={onInputChange}
+          optionsContent={ ['normal', 'raro', 'muito raro'] }
+          value={ cardRare }
+          onChangeEvent={ onInputChange }
           dataTestid="rare-input"
         />
         <LabelAndCheckbox
           labelContent="Super Trunfo ?"
-          checked={cardTrunfo}
-          onChangeEvent={onInputChange}
-          hasTrunfo={hasTrunfo}
+          checked={ cardTrunfo }
+          onChangeEvent={ onInputChange }
+          hasTrunfo={ hasTrunfo }
           dataTestid="trunfo-input"
         />
         <GenericButton
           buttonType="button"
           buttonContent="Salvar"
-          disabled={isSaveButtonDisabled}
-          onClickEvent={onSaveButtonClick}
+          disabled={ isSaveButtonDisabled }
+          onClickEvent={ onSaveButtonClick }
           dataTestid="save-button"
         />
       </form>

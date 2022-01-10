@@ -7,22 +7,22 @@ class LabelAndSelect extends React.Component {
       optionsContent,
       value,
       onChangeEvent,
-      dataTestid
+      dataTestid,
     } = this.props;
     return (
       <section>
-        <label>{labelContent}</label>
+        <label>{ labelContent }</label>
         <select
-          name={dataTestid}
-          value={value}
-          onChange={onChangeEvent}
-          data-testid={dataTestid}
+          name={ dataTestid }
+          value={ value }
+          onChange={ onChangeEvent }
+          data-testid={ dataTestid }
         >
-        {
-          optionsContent.map((element) => (
-            <option key={element}>{element}</option>
-          ))
-        }
+          {
+            optionsContent.map((element) => (
+              <option key={ element }>{ element }</option>
+            ))
+          }
         </select>
       </section>
     );

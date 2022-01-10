@@ -12,32 +12,32 @@ class LabelAndSelectFilter extends React.Component {
     } = this.props;
     return (
       <section>
-        <label>{labelContent}</label>
+        <label>{ labelContent }</label>
         {
           disableSearch === true ? (
             <select
-              name={dataTestid}
-              value={value}
+              name={ dataTestid }
+              value={ value }
               disabled
-              onChange={onChangeEvent}
-              data-testid={dataTestid}
+              onChange={ onChangeEvent }
+              data-testid={ dataTestid }
             >
               {
                 optionsContent.map((element) => (
-                  <option key={element}>{element}</option>
+                  <option key={ element }>{ element }</option>
                 ))
               }
             </select>
           ) : (
             <select
-              name={dataTestid}
-              value={value}
-              onChange={onChangeEvent}
-              data-testid={dataTestid}
+              name={ dataTestid }
+              value={ value }
+              onChange={ onChangeEvent }
+              data-testid={ dataTestid }
             >
               {
                 optionsContent.map((element) => (
-                  <option key={element}>{element}</option>
+                  <option key={ element }>{ element }</option>
                 ))
               }
             </select>
