@@ -29,7 +29,6 @@ class App extends React.Component {
     };
 
     this.saveFormFieldDataInState = this.saveFormFieldDataInState.bind(this);
-    this.validateFormFieldsLength = this.validateFormFieldsLength.bind(this);
     this.validateFormAttributesFields = this.validateFormAttributesFields.bind(this);
     this.saveLetterInState = this.saveLetterInState.bind(this);
     this.deleteCardFromDeck = this.deleteCardFromDeck.bind(this);
@@ -38,34 +37,41 @@ class App extends React.Component {
     this.filterByTrunfo = this.filterByTrunfo.bind(this);
   }
 
-  validateFormFieldsLength() {
-    const { nameInput, descriptionInput, imageInput, rareInput } = this.state;
+  validateFormAttributesFields(target) {
+    const {
+      nameInput,
+      descriptionInput,
+      attr1Input,
+      attr2Input,
+      attr3Input,
+      imageInput,
+      rareInput,
+    } = this.state;
+    const { min, max } = target;
+    let maxFormatted = max === '' || max === undefined  ? 90 : max;
+    let minFormatted = min === '' || min === undefined ? 0 : min;
     if (
       nameInput.length === 0
       || descriptionInput.length === 0
+      || attr1Input.length === 0
+      || attr2Input.length === 0
+      || attr3Input.length === 0
       || imageInput.length === 0
       || rareInput.length === 0
-    ) {
-      this.validateFormAttributesFields(true);
-    } else {
-      this.validateFormAttributesFields(false);
-    }
-  }
-
-  validateFormAttributesFields(previousValidatorAnswer) {
-    const { attr1Input, attr2Input, attr3Input } = this.state;
-    if (
-      attr1Input > 90
-      || attr2Input > 90
-      || attr3Input > 90
-      || attr1Input < 0
-      || attr2Input < 0
-      || attr3Input < 0
+      || Number(attr1Input) === 0
+      || Number(attr2Input) === 0
+      || Number(attr3Input) === 0
+      || Number(attr1Input) < minFormatted
+      || Number(attr2Input) < minFormatted
+      || Number(attr3Input) < minFormatted
+      || Number(attr1Input) > maxFormatted
+      || Number(attr2Input) > maxFormatted
+      || Number(attr3Input) > maxFormatted
       || Number(attr1Input) + Number(attr2Input) + Number(attr3Input) > 210
-      || previousValidatorAnswer === true
     ) {
       this.setState({ buttonDisabled: true });
     } else {
+      console.log('entrou em false');
       this.setState({ buttonDisabled: false });
     }
   }
@@ -83,7 +89,7 @@ class App extends React.Component {
     }
     this.setState(
       { [nameFormatted]: type === 'checkbox' ? checked : value },
-      this.validateFormFieldsLength,
+      () => this.validateFormAttributesFields(target),
     );
   }
 
@@ -133,9 +139,10 @@ class App extends React.Component {
     const { createdLetters } = this.state;
     const nameFormatted = name.replace('button-', '').replace('-Trunfo', '');
     let hasTrunfo = '';
+    const keywordTrunfo = '-Trunfo';
     const previousCreatedLetters = createdLetters;
     const dataArray = [];
-    for (let index = 0; index < 7; index += 1) {
+    for (let index = 0; index < keywordTrunfo.length; index += 1) {
       hasTrunfo += name[name.length - 1 - index];
     }
     this.setState({ createdLetters: [] }, () => {

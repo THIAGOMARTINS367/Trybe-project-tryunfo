@@ -8,6 +8,8 @@ class LabelAndInput extends React.Component {
       inputType,
       value,
       inputId,
+      minNumber,
+      maxNumber,
       onChangeEvent,
       dataTestid,
     } = this.props;
@@ -15,14 +17,30 @@ class LabelAndInput extends React.Component {
       <section>
         <label htmlFor={ inputId }>{ labelContent }</label>
         <br />
-        <input
-          type={ inputType }
-          name={ dataTestid }
-          value={ value }
-          id={ inputId }
-          onChange={ onChangeEvent }
-          data-testid={ dataTestid }
-        />
+        {
+          inputType === 'number' ? (
+            <input
+              type={ inputType }
+              name={ dataTestid }
+              value={ value }
+              id={ inputId }
+              min={ minNumber }
+              max={ maxNumber }
+              onChange={ onChangeEvent }
+              data-testid={ dataTestid }
+            />
+          ) : (
+            <input
+              type={ inputType }
+              name={ dataTestid }
+              value={ value }
+              id={ inputId }
+              onChange={ onChangeEvent }
+              data-testid={ dataTestid }
+            />
+          )
+        }
+        
       </section>
     );
   }
@@ -36,8 +54,15 @@ LabelAndInput.propTypes = {
     PropTypes.string,
   ]).isRequired,
   inputId: PropTypes.string.isRequired,
+  minNumber: PropTypes.number,
+  maxNumber: PropTypes.number,
   onChangeEvent: PropTypes.func.isRequired,
   dataTestid: PropTypes.string.isRequired,
+};
+
+LabelAndInput.defaultProps = {
+  minNumber: 0,
+  maxNumber: 0,
 };
 
 export default LabelAndInput;
