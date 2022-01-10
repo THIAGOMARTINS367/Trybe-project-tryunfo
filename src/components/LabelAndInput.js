@@ -31,7 +31,10 @@ class LabelAndInput extends React.Component {
 LabelAndInput.propTypes = {
   labelContent: PropTypes.string.isRequired,
   inputType: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.number.isRequired,
+    PropTypes.string.isRequired,
+  ]),
   inputId: PropTypes.string.isRequired,
   onChangeEvent: PropTypes.func.isRequired,
   dataTestid: PropTypes.string.isRequired,

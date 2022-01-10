@@ -34,7 +34,7 @@ class LabelAndSelect extends React.Component {
 
 LabelAndSelect.propTypes = {
   labelContent: PropTypes.string.isRequired,
-  optionsContent: PropTypes.string.isRequired,
+  optionsContent: PropTypes.array.isRequired,
   value: PropTypes.string.isRequired,
   selectId: PropTypes.string.isRequired,
   onChangeEvent: PropTypes.func.isRequired,

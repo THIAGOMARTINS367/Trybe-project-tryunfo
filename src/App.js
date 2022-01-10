@@ -143,9 +143,10 @@ class App extends React.Component {
         if (element.nameInput !== nameFormatted) {
           dataArray.push(element);
         }
+        return '';
       });
       this.setState({ createdLetters: dataArray }, () => {
-        this.setState({ temporaryData: createdLetters });
+        this.setState({ temporaryData: dataArray });
       });
       if (hasTrunfo === 'ofnurT-') {
         this.setState({ hasTrunfo: false });
@@ -178,15 +179,16 @@ class App extends React.Component {
           temporaryData2.push(element);
         }
       }
+      return '';
     });
     this.setState({ temporaryData: temporaryData2, filterLettersByName: value });
   }
 
   filterByRarity({ target }) {
     const { value } = target;
+    const { filterLettersByName, createdLetters } = this.state;
     const temporaryData2 = [];
-    const filterLettersByName = this.state.filterLettersByName;
-    this.state.createdLetters.map((element) => {
+    createdLetters.map((element) => {
       if (filterLettersByName.length === 0) {
         if (element.rareInput === value) {
           temporaryData2.push(element);
@@ -206,20 +208,23 @@ class App extends React.Component {
           temporaryData2.push(element);
         }
       }
+      return '';
     });
     this.setState({ temporaryData: temporaryData2, filterByRarity: value });
   }
 
   filterByTrunfo({ target }) {
     const { checked } = target;
+    const { createdLetters, filterLettersByName } = this.state;
     const temporaryData2 = [];
     if (checked === true) {
       this.setState({ disableOtherSearches: true });
     }
-    this.state.createdLetters.map((element) => {
+    createdLetters.map((element) => {
       if (checked === true && element.trunfoInput === true) {
         temporaryData2.push(element);
       }
+      return '';
     });
     this.setState(
       { temporaryData: temporaryData2, filterByTrunfo: checked },
@@ -227,7 +232,7 @@ class App extends React.Component {
         if (checked === false) {
           this.setState({ disableOtherSearches: false });
           this.filterLettersByName({
-            target: { value: this.state.filterLettersByName },
+            target: { value: filterLettersByName },
           });
         }
       },
@@ -235,41 +240,58 @@ class App extends React.Component {
   }
 
   render() {
+    const {
+      nameInput,
+      descriptionInput,
+      attr1Input,
+      attr2Input,
+      attr3Input,
+      imageInput,
+      rareInput,
+      trunfoInput,
+      hasTrunfo,
+      buttonDisabled,
+      filterLettersByName,
+      disableOtherSearches,
+      filterByRarity,
+      filterByTrunfo,
+      temporaryData,
+    } = this.state;
     return (
       <main>
         <h1>Tryunfo</h1>
         <Form
-          cardName={ this.state.nameInput }
-          cardDescription={ this.state.descriptionInput }
-          cardAttr1={ this.state.attr1Input }
-          cardAttr2={ this.state.attr2Input }
-          cardAttr3={ this.state.attr3Input }
-          cardImage={ this.state.imageInput }
-          cardRare={ this.state.rareInput }
-          cardTrunfo={ this.state.trunfoInput }
-          hasTrunfo={ this.state.hasTrunfo }
-          isSaveButtonDisabled={ this.state.buttonDisabled }
+          cardName={ nameInput }
+          cardDescription={ descriptionInput }
+          cardAttr1={ attr1Input }
+          cardAttr2={ attr2Input }
+          cardAttr3={ attr3Input }
+          cardImage={ imageInput }
+          cardRare={ rareInput }
+          cardTrunfo={ trunfoInput }
+          hasTrunfo={ hasTrunfo }
+          isSaveButtonDisabled={ buttonDisabled }
           onInputChange={ this.saveFormFieldDataInState }
           onSaveButtonClick={ this.saveLetterInState }
         />
         <hr />
         <Card
-          cardName={ this.state.nameInput }
-          cardDescription={ this.state.descriptionInput }
-          cardAttr1={ this.state.attr1Input }
-          cardAttr2={ this.state.attr2Input }
-          cardAttr3={ this.state.attr3Input }
-          cardImage={ this.state.imageInput }
-          cardRare={ this.state.rareInput }
-          cardTrunfo={ this.state.trunfoInput }
+          cardName={ nameInput }
+          cardDescription={ descriptionInput }
+          cardAttr1={ attr1Input }
+          cardAttr2={ attr2Input }
+          cardAttr3={ attr3Input }
+          cardImage={ imageInput }
+          cardRare={ rareInput }
+          cardTrunfo={ trunfoInput }
         />
         <hr />
         <h3>Filtros de Busca</h3>
         <InputAndPlaceholder
           inputType="text"
-          value={ this.state.filterLettersByName }
+          value={ filterLettersByName }
           placeholderContent="Nome da Carta"
-          disableSearch={ this.state.disableOtherSearches }
+          disableSearch={ disableOtherSearches }
           onChangeEvent={ this.filterLettersByName }
           dataTestid="name-filter"
         />
@@ -277,27 +299,27 @@ class App extends React.Component {
         <LabelAndSelectFilter
           labelContent="Raridade"
           optionsContent={ ['todas', 'normal', 'raro', 'muito raro'] }
-          value={ this.state.filterByRarity }
+          value={ filterByRarity }
           selectFilterId="rare-filter-select"
-          disableSearch={ this.state.disableOtherSearches }
+          disableSearch={ disableOtherSearches }
           onChangeEvent={ this.filterByRarity }
           dataTestid="rare-filter"
         />
         <LabelAndCheckboxFilter
           labelContent="Super Trunfo"
-          checked={ this.state.filterByTrunfo }
+          checked={ filterByTrunfo }
           checkboxFilterId="trunfo-filter-checkbox"
           onChangeEvent={ this.filterByTrunfo }
           dataTestid="trunfo-filter"
         />
         <hr />
         {
-          this.state.temporaryData.map((element) => (
+          temporaryData.map((element) => (
             <Card
               key={ `${element.nameInput}
                 ${element.attr1Input}
                 ${element.attr2Input}
-                ${element.attr3Input}`}
+                ${element.attr3Input}` }
               cardID={ element.nameInput }
               cardName={ element.nameInput }
               cardDescription={ element.descriptionInput }

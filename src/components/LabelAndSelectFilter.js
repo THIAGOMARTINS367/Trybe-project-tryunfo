@@ -54,7 +54,7 @@ class LabelAndSelectFilter extends React.Component {
 
 LabelAndSelectFilter.propTypes = {
   labelContent: PropTypes.string.isRequired,
-  optionsContent: PropTypes.string.isRequired,
+  optionsContent: PropTypes.array.isRequired,
   value: PropTypes.string.isRequired,
   selectFilterId: PropTypes.string.isRequired,
   disableSearch: PropTypes.bool.isRequired,
