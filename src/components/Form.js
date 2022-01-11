@@ -94,7 +94,6 @@ class Form extends React.Component {
           dataTestid="trunfo-input"
         />
         <GenericButton
-          buttonType="button"
           buttonContent="Salvar"
           disabled={ isSaveButtonDisabled }
           onClickEvent={ onSaveButtonClick }

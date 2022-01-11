@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 class GenericButton extends React.Component {
   render() {
     const {
-      buttonType,
       buttonContent,
       disabled,
       onClickEvent,
@@ -12,7 +11,7 @@ class GenericButton extends React.Component {
     } = this.props;
     return (
       <button
-        type={ buttonType === '' ? 'button' : buttonType }
+        type="button"
         disabled={ disabled }
         onClick={ onClickEvent }
         data-testid={ dataTestid }
@@ -24,7 +23,6 @@ class GenericButton extends React.Component {
 }
 
 GenericButton.propTypes = {
-  buttonType: PropTypes.string.isRequired,
   buttonContent: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
   onClickEvent: PropTypes.func.isRequired,

@@ -1,10 +1,11 @@
 import React from 'react';
+import App2 from './App2';
 import Card from './components/Card';
-import Form from './components/Form';
-import InputAndPlaceholder from './components/InputAndPlaceholder';
+import { MAX_ATTRIBUTE_VALUE, MAX_VALUE_SUM_OF_ATTRIBUTES,
+  MIN_ATTRIBUTE_VALUE } from './Constants';
 import './App.css';
-import LabelAndCheckboxFilter from './components/LabelAndCheckboxFilter';
-import LabelAndSelectFilter from './components/LabelAndSelectFilter';
+import funcSaveLetterInState from './components/AppfuncSaveLetterInState';
+import funcFilterLettersByName from './components/AppfuncFilterLettersByName';
 
 class App extends React.Component {
   constructor() {
@@ -27,7 +28,6 @@ class App extends React.Component {
       filterByTrunfo: false,
       disableOtherSearches: false,
     };
-
     this.saveFormFieldDataInState = this.saveFormFieldDataInState.bind(this);
     this.validateFormAttributesFields = this.validateFormAttributesFields.bind(this);
     this.saveLetterInState = this.saveLetterInState.bind(this);
@@ -37,41 +37,35 @@ class App extends React.Component {
     this.filterByTrunfo = this.filterByTrunfo.bind(this);
   }
 
-  validateFormAttributesFields(target) {
+  validateFormAttributesFields2(maxFormatted, minFormatted) {
     const {
-      nameInput,
-      descriptionInput,
-      attr1Input,
-      attr2Input,
-      attr3Input,
-      imageInput,
-      rareInput,
+      nameInput, descriptionInput, attr1Input, attr2Input,
+      attr3Input, imageInput, rareInput,
     } = this.state;
-    const { min, max } = target;
-    const maxFormatted = max === '' || max === undefined ? 90 : max;
-    const minFormatted = min === '' || min === undefined ? 0 : min;
+    const validations = [
+      nameInput.length === 0, descriptionInput.length === 0,
+      attr1Input.length === 0, attr2Input.length === 0,
+      attr3Input.length === 0, imageInput.length === 0,
+      rareInput.length === 0, Number(attr1Input) === 0,
+      Number(attr2Input) === 0, Number(attr3Input) === 0,
+      Number(attr1Input) < minFormatted, Number(attr2Input) < minFormatted,
+      Number(attr3Input) < minFormatted, Number(attr1Input) > maxFormatted,
+      Number(attr2Input) > maxFormatted, Number(attr3Input) > maxFormatted,
+      Number(attr1Input) + Number(attr2Input) + Number(attr3Input)
+        > MAX_VALUE_SUM_OF_ATTRIBUTES,
+    ];
+    return validations;
+  }
+
+  validateFormAttributesFields() {
     if (
-      nameInput.length === 0
-      || descriptionInput.length === 0
-      || attr1Input.length === 0
-      || attr2Input.length === 0
-      || attr3Input.length === 0
-      || imageInput.length === 0
-      || rareInput.length === 0
-      || Number(attr1Input) === 0
-      || Number(attr2Input) === 0
-      || Number(attr3Input) === 0
-      || Number(attr1Input) < minFormatted
-      || Number(attr2Input) < minFormatted
-      || Number(attr3Input) < minFormatted
-      || Number(attr1Input) > maxFormatted
-      || Number(attr2Input) > maxFormatted
-      || Number(attr3Input) > maxFormatted
-      || Number(attr1Input) + Number(attr2Input) + Number(attr3Input) > 210
+      this.validateFormAttributesFields2(
+        MAX_ATTRIBUTE_VALUE,
+        MIN_ATTRIBUTE_VALUE,
+      ).includes(true)
     ) {
       this.setState({ buttonDisabled: true });
     } else {
-      console.log('entrou em false');
       this.setState({ buttonDisabled: false });
     }
   }
@@ -89,49 +83,30 @@ class App extends React.Component {
     }
     this.setState(
       { [nameFormatted]: type === 'checkbox' ? checked : value },
-      () => this.validateFormAttributesFields(target),
+      () => this.validateFormAttributesFields(),
     );
   }
 
-  saveLetterInState() {
+  async saveLetterInState() {
+    const func = await funcSaveLetterInState(this.state);
     const {
-      nameInput,
-      descriptionInput,
-      attr1Input,
-      attr2Input,
-      attr3Input,
-      imageInput,
-      rareInput,
-      trunfoInput,
-      createdLetters,
-      hasTrunfo,
-    } = this.state;
-    const object = {
-      nameInput,
-      descriptionInput,
-      attr1Input,
-      attr2Input,
-      attr3Input,
-      imageInput,
-      rareInput,
-      trunfoInput,
-    };
-    let hasTrunfo2 = hasTrunfo;
-    if (trunfoInput === true) {
-      hasTrunfo2 = true;
-    }
-    createdLetters.push(object);
-    this.setState({
-      nameInput: '',
-      descriptionInput: '',
-      imageInput: '',
-      attr1Input: 0,
-      attr2Input: 0,
-      attr3Input: 0,
-      rareInput: 'normal',
-      hasTrunfo: hasTrunfo2,
-      trunfoInput: false,
-    }, () => this.setState({ temporaryData: createdLetters }));
+      nameInputSetState, descriptionInputSetState, imageInputSetState,
+      attr1InputSetState, attr2InputSetState, attr3InputSetState,
+      rareInputSetState, hasTrunfoSetState, trunfoInputSetState,
+    } = func;
+    const { createdLetters } = this.state;
+    this.setState(
+      { nameInput: nameInputSetState,
+        descriptionInput: descriptionInputSetState,
+        imageInput: imageInputSetState,
+        attr1Input: attr1InputSetState,
+        attr2Input: attr2InputSetState,
+        attr3Input: attr3InputSetState,
+        rareInput: rareInputSetState,
+        hasTrunfo: hasTrunfoSetState,
+        trunfoInput: trunfoInputSetState,
+      }, () => this.setState({ temporaryData: createdLetters }),
+    );
   }
 
   deleteCardFromDeck({ target }) {
@@ -161,24 +136,9 @@ class App extends React.Component {
     });
   }
 
-  filterLettersByName({ target }) {
-    const { value } = target;
-    const { filterByRarity, createdLetters } = this.state;
-    const temporaryData2 = [];
-    const filterByRarity2 = filterByRarity;
-    createdLetters.map((element) => {
-      if (filterByRarity2 === 'todas') {
-        if (element.nameInput.includes(value) || value.length === 0) {
-          temporaryData2.push(element);
-        }
-      } else if (
-        element.nameInput.includes(value)
-        && element.rareInput === filterByRarity2
-      ) {
-        temporaryData2.push(element);
-      }
-      return '';
-    });
+  async filterLettersByName({ target }) {
+    const object = await funcFilterLettersByName(target, this.state);
+    const { temporaryData2, value } = object;
     this.setState({ temporaryData: temporaryData2, filterLettersByName: value });
   }
 
@@ -230,76 +190,35 @@ class App extends React.Component {
 
   render() {
     const {
-      nameInput,
-      descriptionInput,
-      attr1Input,
-      attr2Input,
-      attr3Input,
-      imageInput,
-      rareInput,
-      trunfoInput,
-      hasTrunfo,
-      buttonDisabled,
-      filterLettersByName,
-      disableOtherSearches,
-      filterByRarity,
-      filterByTrunfo,
-      temporaryData,
+      nameInput, descriptionInput, attr1Input, attr2Input,
+      attr3Input, imageInput, rareInput, trunfoInput,
+      hasTrunfo, buttonDisabled, filterLettersByName, disableOtherSearches,
+      filterByRarity, filterByTrunfo, temporaryData,
     } = this.state;
     return (
       <main>
-        <h1>Tryunfo</h1>
-        <Form
-          cardName={ nameInput }
-          cardDescription={ descriptionInput }
-          cardAttr1={ attr1Input }
-          cardAttr2={ attr2Input }
-          cardAttr3={ attr3Input }
-          cardImage={ imageInput }
-          cardRare={ rareInput }
-          cardTrunfo={ trunfoInput }
+        <App2
+          nameInput={ nameInput }
+          descriptionInput={ descriptionInput }
+          attr1Input={ attr1Input }
+          attr2Input={ attr2Input }
+          attr3Input={ attr3Input }
+          imageInput={ imageInput }
+          rareInput={ rareInput }
+          trunfoInput={ trunfoInput }
           hasTrunfo={ hasTrunfo }
-          isSaveButtonDisabled={ buttonDisabled }
-          onInputChange={ this.saveFormFieldDataInState }
-          onSaveButtonClick={ this.saveLetterInState }
-        />
-        <hr />
-        <Card
-          cardName={ nameInput }
-          cardDescription={ descriptionInput }
-          cardAttr1={ attr1Input }
-          cardAttr2={ attr2Input }
-          cardAttr3={ attr3Input }
-          cardImage={ imageInput }
-          cardRare={ rareInput }
-          cardTrunfo={ trunfoInput }
-        />
-        <hr />
-        <h3>Filtros de Busca</h3>
-        <InputAndPlaceholder
-          inputType="text"
-          value={ filterLettersByName }
-          placeholderContent="Nome da Carta"
-          disableSearch={ disableOtherSearches }
-          onChangeEvent={ this.filterLettersByName }
-          dataTestid="name-filter"
-        />
-        <br />
-        <LabelAndSelectFilter
-          labelContent="Raridade"
-          optionsContent="todas, normal, raro, muito raro,"
-          value={ filterByRarity }
-          selectFilterId="rare-filter-select"
-          disableSearch={ disableOtherSearches }
-          onChangeEvent={ this.filterByRarity }
-          dataTestid="rare-filter"
-        />
-        <LabelAndCheckboxFilter
-          labelContent="Super Trunfo"
-          checked={ filterByTrunfo }
-          checkboxFilterId="trunfo-filter-checkbox"
-          onChangeEvent={ this.filterByTrunfo }
-          dataTestid="trunfo-filter"
+          buttonDisabledState={ buttonDisabled }
+          filterLettersByName={ filterLettersByName }
+          disableOtherSearches={ disableOtherSearches }
+          filterByRarity={ filterByRarity }
+          filterByTrunfo={ filterByTrunfo }
+          temporaryData={ temporaryData.join('') }
+          funcSaveFormFieldDataInState={ this.saveFormFieldDataInState }
+          funcSaveLetterInState={ this.saveLetterInState }
+          funcFilterLettersByName={ this.filterLettersByName }
+          funcFilterByRarity={ this.filterByRarity }
+          funcFilterByTrunfo={ this.filterByTrunfo }
+          funcDeleteCardFromDeck={ this.deleteCardFromDeck }
         />
         <hr />
         {
