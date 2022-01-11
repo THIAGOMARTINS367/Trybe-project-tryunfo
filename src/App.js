@@ -3,7 +3,6 @@ import App2 from './App2';
 import Card from './components/Card';
 import { MAX_ATTRIBUTE_VALUE, MAX_VALUE_SUM_OF_ATTRIBUTES,
   MIN_ATTRIBUTE_VALUE } from './Constants';
-import './App.css';
 import funcSaveLetterInState from './components/AppfuncSaveLetterInState';
 import funcFilterLettersByName from './components/AppfuncFilterLettersByName';
 
