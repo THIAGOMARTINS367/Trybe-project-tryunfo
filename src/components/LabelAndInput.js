@@ -40,7 +40,7 @@ class LabelAndInput extends React.Component {
             />
           )
         }
-        
+
       </section>
     );
   }

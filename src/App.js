@@ -48,8 +48,8 @@ class App extends React.Component {
       rareInput,
     } = this.state;
     const { min, max } = target;
-    let maxFormatted = max === '' || max === undefined  ? 90 : max;
-    let minFormatted = min === '' || min === undefined ? 0 : min;
+    const maxFormatted = max === '' || max === undefined ? 90 : max;
+    const minFormatted = min === '' || min === undefined ? 0 : min;
     if (
       nameInput.length === 0
       || descriptionInput.length === 0
@@ -171,13 +171,11 @@ class App extends React.Component {
         if (element.nameInput.includes(value) || value.length === 0) {
           temporaryData2.push(element);
         }
-      } else {
-        if (
-          element.nameInput.includes(value)
-          && element.rareInput === filterByRarity2
-        ) {
-          temporaryData2.push(element);
-        }
+      } else if (
+        element.nameInput.includes(value)
+        && element.rareInput === filterByRarity2
+      ) {
+        temporaryData2.push(element);
       }
       return '';
     });
@@ -193,13 +191,11 @@ class App extends React.Component {
         if (element.rareInput === value || value === 'todas') {
           temporaryData2.push(element);
         }
-      } else {
-        if (
-          (element.rareInput === value || value === 'todas')
-          && element.nameInput.includes(filterLettersByName)
-        ) {
-          temporaryData2.push(element);
-        }
+      } else if (
+        (element.rareInput === value || value === 'todas')
+        && element.nameInput.includes(filterLettersByName)
+      ) {
+        temporaryData2.push(element);
       }
       return '';
     });
