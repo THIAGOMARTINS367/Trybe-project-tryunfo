@@ -1,4 +1,4 @@
-export default async function funcFilterLettersByName(target, appState) {
+export default function funcFilterLettersByName(target, appState) {
   const { value } = target;
   const { filterByRarity, createdLetters } = appState;
   const temporaryData2 = [];

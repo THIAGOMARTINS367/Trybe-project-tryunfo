@@ -1,4 +1,4 @@
-export default async function funcSaveLetterInState(appState) {
+export default function funcSaveLetterInState(appState) {
   const {
     nameInput, descriptionInput, attr1Input,
     attr2Input, attr3Input, imageInput,

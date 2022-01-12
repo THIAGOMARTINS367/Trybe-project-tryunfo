@@ -45,8 +45,7 @@ class App extends React.Component {
       nameInput.length === 0, descriptionInput.length === 0,
       attr1Input.length === 0, attr2Input.length === 0,
       attr3Input.length === 0, imageInput.length === 0,
-      rareInput.length === 0, Number(attr1Input) === 0,
-      Number(attr2Input) === 0, Number(attr3Input) === 0,
+      rareInput.length === 0,
       Number(attr1Input) < minFormatted, Number(attr2Input) < minFormatted,
       Number(attr3Input) < minFormatted, Number(attr1Input) > maxFormatted,
       Number(attr2Input) > maxFormatted, Number(attr3Input) > maxFormatted,
@@ -86,8 +85,8 @@ class App extends React.Component {
     );
   }
 
-  async saveLetterInState() {
-    const func = await funcSaveLetterInState(this.state);
+  saveLetterInState() {
+    const func = funcSaveLetterInState(this.state);
     const {
       nameInputSetState, descriptionInputSetState, imageInputSetState,
       attr1InputSetState, attr2InputSetState, attr3InputSetState,
@@ -135,8 +134,8 @@ class App extends React.Component {
     });
   }
 
-  async filterLettersByName({ target }) {
-    const object = await funcFilterLettersByName(target, this.state);
+  filterLettersByName({ target }) {
+    const object = funcFilterLettersByName(target, this.state);
     const { temporaryData2, value } = object;
     this.setState({ temporaryData: temporaryData2, filterLettersByName: value });
   }
