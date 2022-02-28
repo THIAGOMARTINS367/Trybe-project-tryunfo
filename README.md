@@ -1,24 +1,10 @@
-### Termos e acordos
-
-Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe.
-
----
-
 # Boas vindas ao repositório do projeto Tryunfo!
 
 Você já usa o GitHub diariamente para desenvolver os exercícios, certo? Agora, para desenvolver os projetos, você deverá seguir as instruções a seguir. Fique atento a cada passo, e se tiver qualquer dúvida, nos envie por _Slack_! #vqv 🚀
 
 Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir deste repositório, utilizando uma branch específica e um _Pull Request_ para colocar seus códigos.
 
-
-## Agradecimentos
-
-Pessoas que contribuíram com feedbacks no programa de _beta testers_ desse projeto:
-
-[@alanmdf](https://github.com/alanmdf), [@Aleilton](https://github.com/Aleilton), [@felipeventorim](https://github.com/felipeventorim), [@gusttavocaruso](https://github.com/gusttavocaruso), [@junglejf](https://github.com/junglejf) , [@JVictorC](https://github.com/JVictorC), [@lcds90](https://github.com/lcds90), [@Murilo-Rainho](https://github.com/Murilo-Rainho), [@rafaelromanoz](https://github.com/rafaelromanoz), [@rogeriop1990cv](https://github.com/rogeriop1990cv), [@RoyMusthang](https://github.com/RoyMusthang) e [@vdionysio](https://github.com/vdionysio)
-
 ---
-
 
 # Sumário
 
@@ -28,7 +14,6 @@ Pessoas que contribuíram com feedbacks no programa de _beta testers_ desse proj
 - [Entregáveis](#entregáveis)
   - [O que deverá ser desenvolvido](#o-que-deverá-ser-desenvolvido)
   - [Desenvolvimento](#desenvolvimento)
-  - [Data de Entrega](#data-de-entrega)
 - [Observações técnicas](#observações-técnicas)
   - [Renderização Condicional](#renderização-condicional)
 - [Instruções para entregar seu projeto](#instruções-para-entregar-seu-projeto)
@@ -60,7 +45,6 @@ Pessoas que contribuíram com feedbacks no programa de _beta testers_ desse proj
   - [13. Iniciar o jogo](#13-iniciar-o-jogo)
   - [14. Criar botão Próxima Carta](#14-criar-botão-próxima-carta)
   - [15. Recomeçar o jogo](#15-recomeçar-o-jogo)
-- [Avisos Finais](#avisos-finais)
 
 ---
 
@@ -113,15 +97,8 @@ Na renderização das cartas, sua aplicação deverá possuir três filtros de l
 
 O tema do seu baralho é **livre**, então explore a sua criatividade! Mas use seu bom senso para a criação do seu baralho. Lembre-se das normas de conduta e ética no Manual de Estudante.
 
-## Data de Entrega
-
-  - Projeto individual.
-
-  - Serão dois dias de projeto.
-  
-  - Data de entrega para avaliação final do projeto: `17/01/2022 - 14:00h`.
-
 ---
+
 # Observações técnicas
 
 ## Renderização condicional
@@ -757,15 +734,3 @@ Você já criou o baralho do seu Tryunfo. Agora você pode criar uma funcionalid
   * Ao ser clicar, no botão `Embaralhar cartas` o baralho deve ser embaralhado novamente e o estado que controla a posição da carta exibida deve ser `0` novamente.
 
   ![requisito-15](images/requisito-15.png)
-
----
-
-# Avisos Finais
-
-Ao finalizar e submeter o projeto, não se esqueça de avaliar sua experiência preenchendo o formulário. Leva menos de 3 minutos!
-
-Link: [FORMULÁRIO DE AVALIAÇÃO DE PROJETO](https://bit.ly/2OfLJPn)
-
-O avaliador automático não necessariamente avalia seu projeto na ordem em que os requisitos aparecem no readme. Isso acontece para deixar o processo de avaliação mais rápido. Então, não se assuste se isso acontecer, ok?
-
----
